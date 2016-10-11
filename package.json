@@ -1,0 +1,18 @@
+{
+  "name": "inout",
+  "version": "0.0.1",
+  "description": "Slackbot for tracking who is in and who is out",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mike Brevoort",
+  "license": "MIT",
+  "dependencies": {
+    "beepboop-slapp-presence-polyfill": "^1.1.1",
+    "express": "^4.14.0",
+    "slapp": "^1.2.0",
+    "slapp-context-beepboop": "^1.0.0",
+    "slapp-convo-beepboop": "^1.0.0"
+  }
+}
