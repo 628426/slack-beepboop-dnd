@@ -1,5 +1,6 @@
-## Who is In or Out?
+## dnd
 
-A simple Slack app for keeping track of who is in or who is out (e.g. coming to the office, going to lunch, etc.).
+A simple bot for support dnd sessions and groups that use or run in slack
 
-![gif](https://beepboophq.storage.googleapis.com/ecf859cec6830b414c7cab411b80168702373f5a1d44bed41c49c14c76b704c9)
+Supported commands
+# /roll
