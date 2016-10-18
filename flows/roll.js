@@ -13,9 +13,17 @@ module.exports = (slapp) => {
                 msg.respond(":sob Sorry, I didn't understand you.  Try something like 2d6 or d20 or 3d6+4.  See https://github.com/troygoode/node-roll for more advanced examples");
             } else {
                 console.log('about to roll ' + text)
+
+                
+
                 var r = new Roll().roll(text)
                 console.log(JSON.stringify(r));
-                msg.respond(r.result.toString())
+
+                var rollResult = r.result.toString()
+                var rollCalculation = r.rolled.toString()
+                var user = msg.body.user_name
+                
+                msg.respond("@" + user + ' roll result was ' + rollResult + ' (dice rolled were' + JSON.stringify(rollCalculation) + ')')
             }
         }
         catch (e) {
