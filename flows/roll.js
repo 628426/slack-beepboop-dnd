@@ -6,7 +6,7 @@ const Roll = require('./roll/index.js')
 module.exports = (slapp) => {
 
     slapp.command('/roll', /.*/, (msg, text) => {
-        console.log('Command ' + text + ' found' )
+        console.log('Command ' + text + ' found')
         console.log(JSON.stringify(msg))
         try {
             if (msg.body.text == '') {
@@ -14,16 +14,14 @@ module.exports = (slapp) => {
             } else {
                 console.log('about to roll ' + text)
 
-                
-
                 var r = new Roll().roll(text)
                 console.log(JSON.stringify(r));
 
                 var rollResult = r.result.toString()
                 var rollCalculation = r.rolled.toString()
-                var user = msg.body.userName
-                
-                msg.respond("@" + user + ' roll result was ' + rollResult + ' (dice rolled were ' + JSON.stringify(rollCalculation) + ')')
+                var user = msg.user
+
+                msg.respond("@" + user + ' roll result for _' + text + '_ was ' + rollResult + ' (dice rolled were ' + JSON.stringify(rollCalculation) + ')')
             }
         }
         catch (e) {
