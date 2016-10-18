@@ -21,9 +21,9 @@ module.exports = (slapp) => {
 
                 var rollResult = r.result.toString()
                 var rollCalculation = r.rolled.toString()
-                var user = msg.body.user_name
+                var user = msg.body.userName
                 
-                msg.respond("@" + user + ' roll result was ' + rollResult + ' (dice rolled were' + JSON.stringify(rollCalculation) + ')')
+                msg.respond("@" + user + ' roll result was ' + rollResult + ' (dice rolled were ' + JSON.stringify(rollCalculation) + ')')
             }
         }
         catch (e) {
