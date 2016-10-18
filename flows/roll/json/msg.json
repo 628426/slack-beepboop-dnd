@@ -1,30 +1,30 @@
 {
     "type": "command",
     "body": {
-        "token": "T0ejyzanMxmS8o3syxFRwjeV",
-        "team_id": "T2MK6PS2Y",
+        "token": "redacted",
+        "team_id": "redacted",
         "team_domain": "benstable",
-        "channel_id": "C2MKTCV50",
+        "channel_id": "redacted",
         "channel_name": "general",
-        "user_id": "U2MHU3DA7",
+        "user_id": "redacted",
         "user_name": "griswold",
         "command": "/roll",
         "text": "d20",
         "response_url": "https://hooks.slack.com/commands/T2MK6PS2Y/92667959525/Lt5JVrhHDFVdsYwGhxbDHWBD"
     },
     "meta": {
-        "verify_token": "T0ejyzanMxmS8o3syxFRwjeV",
-        "user_id": "U2MHU3DA7",
-        "channel_id": "C2MKTCV50",
-        "team_id": "T2MK6PS2Y",
-        "app_token": "xoxp-89652808100-89606115347-90172208353-3f9b6bc81686097408641f983f050e09",
-        "app_user_id": "U2MHU3DA7",
-        "bot_token": "xoxb-90110380707-4WGeVVjSR3TRISMvtOw16Yh8",
-        "bot_user_id": "U2N38B6LT",
-        "bot_user_name": "dnd_dm",
-        "team_name": "BensTable",
-        "team_domain": "benstable",
-        "team_resource_id": "94952befcc1f4f8bb13436094860bfea",
+        "verify_token": "redacted",
+        "user_id": "redacted",
+        "channel_id": "redacted",
+        "team_id": "redacted",
+        "app_token": "redacted",
+        "app_user_id": "redacted",
+        "bot_token": "redacted",
+        "bot_user_id": "redacted",
+        "bot_user_name": "redacted",
+        "team_name": "redacted",
+        "team_domain": "redacted",
+        "team_resource_id": "redacted",
         "incoming_webhook_url": "",
         "incoming_webhook_channel": ""
     },
@@ -41,7 +41,7 @@
             null
         ],
         "_registry": {},
-        "verify_token": "T0ejyzanMxmS8o3syxFRwjeV",
+        "verify_token": "redacted",
         "log": true,
         "colors": false,
         "convoStore": {
@@ -84,7 +84,7 @@
             "domain": null,
             "_events": {},
             "_eventsCount": 1,
-            "verify_token": "T0ejyzanMxmS8o3syxFRwjeV"
+            "verify_token": "redacted"
         }
     },
     "_queue": null
