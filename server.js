@@ -21,6 +21,11 @@ var slapp = Slapp({
   context: BeepBoopContext()
 })
 
+slapp.use((msg, next) => {
+  console.log(msg)
+  next()
+})
+
 require('beepboop-slapp-presence-polyfill')(slapp, { debug: true })
 require('./flows')(slapp)
 var app = slapp.attachToExpress(express())
