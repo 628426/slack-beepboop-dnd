@@ -15,7 +15,7 @@ module.exports = (slapp) => {
                 console.log('about to roll ' + text)
                 var r = new Roll().roll(text)
                 console.log(JSON.stringify(r));
-                msg.respond(r.result)
+                msg.respond(r.result.toString())
             }
         }
         catch (e) {
