@@ -9,7 +9,11 @@ const Roll = require('./flows/roll/index.js')
 
 console.log(new Roll().roll('d20').result)
 
+console.log('t:' + process.env.SLACK_VERIFY_TOKEN)
+
 if (!process.env.PORT) throw Error('PORT missing but required')
+
+
 
 var slapp = Slapp({
   record: 'out.jsonl',
