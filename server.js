@@ -34,5 +34,9 @@ app.get('/', function (req, res) {
   res.send('Hello')
 })
 
+app.post("/", function(req,res) {
+  console.log(req)
+});
+
 console.log('Listening on :' + process.env.PORT)
 app.listen(process.env.PORT)
