@@ -21,7 +21,7 @@ var slapp = Slapp({
   context: BeepBoopContext()
 })
 
-slapp.use((msg, next) => {
+slapp._middleware.unshift((msg, next) => {
   console.log(msg)
   next()
 })
