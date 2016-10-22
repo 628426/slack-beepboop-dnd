@@ -9,7 +9,7 @@ const Roll = require('./flows/roll/index.js')
 
 console.log(new Roll().roll('d20').result)
 
-console.log('t:' + process.env.SLACK_VERIFY_TOKEN)
+console.log('SLACK_VERIFY_TOKEN::' + process.env.SLACK_VERIFY_TOKEN)
 
 for(var env in process.env) {
   console.log(env + '::' +  process.env[env])
@@ -31,7 +31,7 @@ var slapp = Slapp({
 require('beepboop-slapp-presence-polyfill')(slapp, { debug: true })
 require('./flows')(slapp)
 
-slapp.client.users.list()
+//slapp.client.users.list()
 
 var app = slapp.attachToExpress(express())
 
