@@ -5,9 +5,8 @@ const Roll = require('./roll/index.js')
 module.exports = (slapp) => {
 
     slapp.command('/party', /.*/, (msg, text) => {
-        let token = msg.meta.bot_token
-        let id = msg.body.event.item.ts
-        let channel = msg.body.event.item.channel
+        let token = msg.meta["bot_token"]
+
         slapp.client.usergroups.list({ token }, function (err, data) {
             console.log(process.env.SLACK_TOKEN)
             for (var usergroup in data) {
