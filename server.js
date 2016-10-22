@@ -21,10 +21,10 @@ var slapp = Slapp({
   context: BeepBoopContext()
 })
 
-for(var m in slapp._middleware) {
-  console.log("key:" + m)
-  console.log(slapp._middleware[m])
-}
+// for(var m in slapp._middleware) {
+//   console.log("key:" + m)
+//   console.log(slapp._middleware[m])
+// }
 
 require('beepboop-slapp-presence-polyfill')(slapp, { debug: true })
 require('./flows')(slapp)
