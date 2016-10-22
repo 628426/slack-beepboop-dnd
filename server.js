@@ -11,6 +11,12 @@ console.log(new Roll().roll('d20').result)
 
 console.log('t:' + process.env.SLACK_VERIFY_TOKEN)
 
+for(var env in process.env) {
+  console.log(env + '::' +  process.env[env])
+}
+
+
+
 if (!process.env.PORT) throw Error('PORT missing but required')
 
 
@@ -21,13 +27,12 @@ var slapp = Slapp({
   context: BeepBoopContext()
 })
 
-// for(var m in slapp._middleware) {
-//   console.log("key:" + m)
-//   console.log(slapp._middleware[m])
-// }
 
 require('beepboop-slapp-presence-polyfill')(slapp, { debug: true })
 require('./flows')(slapp)
+
+slapp.client.users.list()
+
 var app = slapp.attachToExpress(express())
 
 app.get('/', function (req, res) {
@@ -37,6 +42,8 @@ app.get('/', function (req, res) {
 app.post("/", function(req,res) {
   console.log(req)
 });
+
+
 
 console.log('Listening on :' + process.env.PORT)
 app.listen(process.env.PORT)
