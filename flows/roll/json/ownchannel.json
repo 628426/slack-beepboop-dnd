@@ -10,7 +10,7 @@
         "user_name": "griswold",
         "command": "/roll",
         "text": "PRIVATE",
-        "response_url": "https://hooks.slack.com/commands/T2MK6PS2Y/94892257522/GIaRL4mBMApLrQiFq8QU4HCa"
+        "response_url": "https://hooks.slack.com/commands/redacted"
     },
     "meta": {
         "verify_token": "redacted",
