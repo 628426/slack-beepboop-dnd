@@ -11,11 +11,6 @@ console.log(new Roll().roll('d20').result)
 
 console.log('SLACK_VERIFY_TOKEN::' + process.env.SLACK_VERIFY_TOKEN)
 
-for(var env in process.env) {
-  console.log(env + '::' +  process.env[env])
-}
-
-
 
 if (!process.env.PORT) throw Error('PORT missing but required')
 
