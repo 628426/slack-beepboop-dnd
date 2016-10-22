@@ -19,14 +19,15 @@ module.exports = (slapp) => {
 
                 var rollResult = r.result.toString()
                 var rollCalculation = r.rolled.toString()
+                var rollc  = r.calculation
                 var user = msg.body["user_name"]
 
-                msg.say("@" + user + ' rolled _' + text + '_ and got  ' + rollResult + ' (dice rolled were ' + JSON.stringify(rollCalculation) + ')')
+                msg.say("@" + user + ' rolled _' + text + '_ and got ' + rollResult + ' (dice rolled were ' + JSON.stringify(rollCalculation) + ')')
             }
         }
         catch (e) {
             console.log('exception ' + e)
-            msg.respond(e)
+            msg.respond(':sob Sorry, ' + e.toString())
         }
     })
 }
