@@ -1,7 +1,8 @@
 'use strict'
-
-function wireupCommand(slapp, keyword, cmd) {
-
+const os = require('os')
+var commands = []
+function wireupCommand(slapp, keyword, description, cmd) {
+    commands.push({ command: keyword, description: description })
     slapp.command('/' + keyword, /.*/, (msg, text) => {
         let say = function (text) {
             try {
@@ -41,10 +42,29 @@ function wireupCommand(slapp, keyword, cmd) {
 
 }
 
+function dnd(keyword, msg, text, say) {
+    var r = '';
+    for (var cmd in commands.sort(function (a, b) {
+        if (a.command > b.command) {
+            return 1;
+        }
+        if (a.command < b.command) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
+    })) {
+        r += `*${cmd.command}* ${cmd.description}` + os.EOL
+    }
+    say(r);
+}
+
 // list out explicitly to control order
 module.exports = (slapp) => {
 
-    wireupCommand(slapp, 'roll', require('./roll'))
-    wireupCommand(slapp, 'setdm', require('./setDm'))
+    wireupCommand(slapp, 'roll', 'Rolls the specified di(c)e e.g. /roll d20', require('./roll'))
+    wireupCommand(slapp, 'setdm', 'Sets the specified players as dungeon master i.e. /setdm tony', require('./setDm'))
+
+    wireupCommand(slapp, 'dnd', 'Lists available commands e.g. /dnd', require('./dnd'))
 
 }
