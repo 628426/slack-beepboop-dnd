@@ -4,5 +4,5 @@
 module.exports = (slapp) => {
   //require('./roll')(slapp)
    require('./party')(slapp)
-  require('./setDm')(slapp)   
+  //require('./setDm')(slapp)   
 }

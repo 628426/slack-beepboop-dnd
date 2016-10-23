@@ -30,5 +30,6 @@ function wireupCommand(slapp, keyword, cmd) {
 module.exports = (slapp) => {
 
     wireupCommand(slapp, 'roll', require('./roll'))
+    wireupCommand(slapp, 'setdm', require('./setDm'))
 
 }

@@ -5,6 +5,5 @@ module.exports = function (keyword, msg, text) {
 
     var roll = new r().roll(text)
 
-    return `@${msg.body["user_name"]} rolled _${text}_  and got ${roll.result} (dice rolled were ${JSON.stringify(roll.result)})`
-
+    return `@${msg.body["user_name"]} rolled _${text}_  and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`
 }
