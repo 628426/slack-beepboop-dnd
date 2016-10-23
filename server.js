@@ -25,6 +25,7 @@ var slapp = Slapp({
 
 require('beepboop-slapp-presence-polyfill')(slapp, { debug: true })
 require('./flows')(slapp)
+require('./commands')(slapp)
 
 //slapp.client.users.list()
 
