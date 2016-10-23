@@ -42,7 +42,7 @@ function wireupCommand(slapp, keyword, description, cmd) {
 
 }
 
-function dnd(keyword, msg, text, say) {
+var dndhelp = function(keyword, msg, text, say) {
     var r = '';
     for (var cmd in commands.sort(function (a, b) {
         if (a.command > b.command) {
@@ -65,6 +65,6 @@ module.exports = (slapp) => {
     wireupCommand(slapp, 'roll', 'Rolls the specified di(c)e e.g. /roll d20', require('./roll'))
     wireupCommand(slapp, 'setdm', 'Sets the specified players as dungeon master i.e. /setdm tony', require('./setDm'))
 
-    wireupCommand(slapp, 'dnd', 'Lists available commands e.g. /dnd', require('./dnd'))
+    wireupCommand(slapp, 'dndhelp', 'Lists available commands e.g. /dndhelp', dndhelp )
 
 }
