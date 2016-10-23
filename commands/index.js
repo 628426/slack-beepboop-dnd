@@ -15,6 +15,7 @@ function wireupCommand(slapp, keyword, cmd) {
     slapp.message(keyword, ['direct_mention', 'direct_message', 'mention'], (msg, text) => {
         try {
             let result = cmd(keyword, msg, text)
+            
             msg.respond(result);
         }
         catch (e) {

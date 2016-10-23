@@ -18,7 +18,7 @@ module.exports = function (keyword, msg, text) {
 
         store.set("DM", text, function (err) {
             if (err) {
-                return `":sob: Sorry, ${err} occurred`
+                return `:sob: Sorry, ${err} occurred`
             }
 
             return `:smiling_imp: @${text} is now the dm, look out`

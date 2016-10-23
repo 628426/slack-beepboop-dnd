@@ -17,7 +17,7 @@ module.exports = (slapp) => {
             var dm = data || "griswold"
 
             if(dm != user) {
-                msg.respond(":sob: Sorry, @" + dm + " is currently the dm and is the only player allowed to user the /setdm command" )
+                msg.respond(":sob: Sorry, @" + dm + " is currently the dm and is the only player allowed to use the /setdm command" )
                 return;
             }
 
