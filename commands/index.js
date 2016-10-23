@@ -44,7 +44,7 @@ function wireupCommand(slapp, keyword, description, cmd) {
 
 var dndhelp = function(keyword, msg, text, say) {
     var r = '';
-    for (var cmd in commands.sort(function (a, b) {
+    var sortedCommands = commands.sort(function (a, b) {
         if (a.command > b.command) {
             return 1;
         }
@@ -53,8 +53,9 @@ var dndhelp = function(keyword, msg, text, say) {
         }
         // a must be equal to b
         return 0;
-    })) {
-        r += `*${cmd.command}* ${cmd.description}` + os.EOL
+    }) 
+    for (var cmdIndex = 0; cmdIndex < sortedCommands.length; cmdIndex++) {
+        r += `*${sortedCommands[cmdIndex].command}* ${sortedCommands[cmdIndex].description}` + os.EOL
     }
     say(r);
 }
