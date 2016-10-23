@@ -27,6 +27,6 @@ function wireupCommand(slapp, keyword, cmd) {
 // list out explicitly to control order
 module.exports = (slapp) => {
 
-    wireupKeyword(slapp, 'roll', require('./roll'))
+    wireupCommand(slapp, 'roll', require('./roll'))
 
 }
