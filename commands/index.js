@@ -1,25 +1,29 @@
 'use strict'
 
 function wireupCommand(slapp, keyword, cmd) {
+
     slapp.command('/' + keyword, /.*/, (msg, text) => {
+        let say = function (text) {
+            msg.say(text)
+        }
         try {
-            let result = cmd(keyword, msg, text);
-            msg.say(result)
+            cmd(keyword, msg, text, say);
         }
         catch (e) {
-            msg.say(':sob: Exception::' + e.toString())
+            say(':sob: Exception::' + e.toString())
         }
-
     })
 
     slapp.message(keyword, ['direct_mention', 'direct_message', 'mention'], (msg, text) => {
+        let say = function (t) {
+            msg.respond(t)
+        }
         try {
-            let result = cmd(keyword, msg, text)
-            
-            msg.respond(result);
+            cmd(keyword, msg, text, say)
+
         }
         catch (e) {
-            msg.respond(':sob: Exception:' + e.toString())
+            say(':sob: Exception:' + e.toString())
         }
 
     })
