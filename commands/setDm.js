@@ -2,7 +2,7 @@ const v = require('./validation')
 const store = require('beepboop-persist')()
 
 
-module.exports = function (keyword, msg, text) {
+module.exports = function (keyword, msg, text, say) {
     v.requiresParameters(msg, text, 'a players name, like, fug.  E.g. /setdm fug')
 
     store.get("DM", function (err, data) {
