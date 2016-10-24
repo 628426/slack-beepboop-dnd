@@ -7,7 +7,7 @@ module.exports.setPlayer = function (name, user, operation, args, date, cb) {
         console.log('before set get')
         store.get(key, function (err, player) {
             try {
-
+                player = JSON.parse(player)
                 if (err) return cb(err)
 
                 if (!player) {
@@ -24,7 +24,7 @@ module.exports.setPlayer = function (name, user, operation, args, date, cb) {
                     on: date
                 })
                 console.log('before set set')
-                store.set(key, player, function (err) {
+                store.set(key, JSON.stringify(player), function (err) {
                     console.log('after  set set')
                     if (err) return cb(err)
 
@@ -52,6 +52,7 @@ module.exports.getPlayer = function (name, cb) {
     let key = "PLAYER_" + name;
     console.log('before get')
     store.get(key, function (err, player) {
+        
         console.log('after  get')
         if (err) return cb(err)
 
