@@ -36,8 +36,14 @@ module.exports.mustBeDm = function (msg, command, say, cb) {
     })
 }
 
-module.exports.requiresParameters = function (msg, message, num, say, cb) {
+module.exports.requiresParameters = function (msg, text, message, num, say, cb) {
     let valid = true;
+    let tokens = null;
+    if(text) {
+        tokens = text.split(' ')
+    } else {
+        tokens = []
+    }
     let validationMessage = ":sob: Sorry I couldn't understand you,"
     if (num && num > 1) {
         valid = false
@@ -46,7 +52,7 @@ module.exports.requiresParameters = function (msg, message, num, say, cb) {
         valid = false
         validationMessage += ' a required parameter is missing.'
     }
-    if (!valid) {
+    if (!valid && tokens.length < num) {
         validationMessage += '  Try ' + message
         say(validationMessage)
     } else {
