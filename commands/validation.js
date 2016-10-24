@@ -7,9 +7,9 @@ module.exports.mustBeUser = function(msg, command, user, say, cb) {
             return say(`":sob: Sorry, ${err} occurred looking up user list`)
         } else {
             console.log(JSON.stringify(result.members))
-            if(result.members.some((user) => {
-                console.log(`checking [${user.name}] to [${user}]`)
-                if(user.name == user) {
+            if(result.members.some((u) => {
+                console.log(`checking [${u.name}] to [${user}]`)
+                if(u.name == user) {
                     return true
                 }
             })) {
