@@ -1,4 +1,5 @@
 const v = require('./validation')
+const db = require('./db')
 module.exports = function (keyword, msg, text, say) {
     console.log(text)
     let  args = text.split(' ')
