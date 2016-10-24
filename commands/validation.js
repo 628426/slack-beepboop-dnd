@@ -6,6 +6,7 @@ module.exports.mustBeUser = function(msg, command, user, say, cb) {
         if(err) {
             return say(`":sob: Sorry, ${err} occurred looking up user list`)
         } else {
+            console.log(JSON.stringify(result.members))
             if(result.members.some((user) => {
                 if(user.name == user) {
                     return true
@@ -13,7 +14,7 @@ module.exports.mustBeUser = function(msg, command, user, say, cb) {
             })) {
                 cb()
             } else {
-                return say(`":sob: Sorry, I expected you to tell me a user where you said ${user} so I can't continue`)
+                return say(`:sob: Sorry, I expected you to tell me a user where you said _${user}_ so I can't continue`)
             }
         }
     })
