@@ -8,6 +8,7 @@ module.exports.mustBeUser = function(msg, command, user, say, cb) {
         } else {
             console.log(JSON.stringify(result.members))
             if(result.members.some((user) => {
+                console.log(`checking [${user.name}] to [${user}]`)
                 if(user.name == user) {
                     return true
                 }
