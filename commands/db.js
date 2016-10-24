@@ -4,8 +4,10 @@ const store = require('beepboop-persist')()
 module.exports.setPlayer = function (name, user, operation, args, date, cb) {
     let key = "PLAYER::" + name;
     try {
+        console.log('before set get')
         store.get(key, function (err, player) {
             try {
+
                 if (err) return cb(err)
 
                 if (!player) {
@@ -21,38 +23,41 @@ module.exports.setPlayer = function (name, user, operation, args, date, cb) {
                     args: args,
                     on: date
                 })
-
+                console.log('before set set')
                 store.set(key, function (err) {
+                    console.log('after  set set')
                     if (err) return cb(err)
 
                     getPlayer(name, function (err, player) {
+                        console.log('after set set get')
                         if (err) return cb(err)
 
                         cb(null, player)
                     })
                 })
-            } catch(ee) {
+            } catch (ee) {
+                console.log('ee')
                 return cb(ee.stack)
             }
 
         })
     }
     catch (e) {
+        console.log('e')
         return cb(e.stack)
     }
 }
 
 module.exports.getPlayer = function (name, cb) {
     let key = "PLAYER::" + name;
-
+    console.log('before get')
     store.get(key, function (err, player) {
+        console.log('after  get')
         if (err) return cb(err)
 
-        if (player && player.commands) {
-            if (player.commands) {
-                for (var c = 0; c <= player.commands.length; c++) {
-                    db.applyToObject(p, player.commands[c].operation, player.commands[c].args)
-                }
+        if (player && player.commands && player.commands.length) {
+            for (var c = 0; c <= player.commands.length; c++) {
+                db.applyToObject(p, player.commands[c].operation, player.commands[c].args)
             }
         }
 
