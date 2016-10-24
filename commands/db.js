@@ -1,6 +1,27 @@
 'use strict'
 const store = require('beepboop-persist')()
 
+function getPlayer(name, cb) {
+    let key = "PLAYER_" + name;
+    console.log('before get')
+    store.get(key, function (err, player) {
+        player = JSON.parse(player)
+        console.log('after  get')
+        if (err) return cb(err)
+
+        if (player && player.commands && player.commands.length) {
+            for (var c = 0; c <= player.commands.length; c++) {
+                db.applyToObject(p, player.commands[c].operation, player.commands[c].args)
+            }
+        }
+
+        cb(null, player)
+
+    })
+
+}
+
+
 module.exports.setPlayer = function (name, user, operation, args, date, cb) {
     let key = "PLAYER_" + name;
     try {
@@ -49,23 +70,7 @@ module.exports.setPlayer = function (name, user, operation, args, date, cb) {
 }
 
 module.exports.getPlayer = function (name, cb) {
-    let key = "PLAYER_" + name;
-    console.log('before get')
-    store.get(key, function (err, player) {
-        player = JSON.parse(player)
-        console.log('after  get')
-        if (err) return cb(err)
-
-        if (player && player.commands && player.commands.length) {
-            for (var c = 0; c <= player.commands.length; c++) {
-                db.applyToObject(p, player.commands[c].operation, player.commands[c].args)
-            }
-        }
-
-        cb(null, player)
-
-    })
-
+    getPlayer(name, cb)
 }
 
 function isObject(obj) {
