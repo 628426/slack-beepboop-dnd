@@ -1,14 +1,20 @@
+const v = require('./validation')
 module.exports = function (keyword, msg, text, say) {
-    if (!text) {
-        return say(":sob: Sorry I couldn't understand you, you'll have to try harder. Try something like /setplayer fug level 1")
-    }
+
     var args = msg.split(' ')
-    if (args.length == 1) {
-        return say(`:sob: Right, I couldn't quite understand you, you'll have to be clearer. I know you want to do something to poor @${args[0]} but I'm not sure what. Try something like /setplayer ${args[0]} hp 99`)
-    }
-    if (args.length % 2 != 0) {
-        return say(":sob: Oddly, I couldn't understand you, you'll have to try harder. Try something like /setplayer fug level 1")
-    }
+
+    v.requiresParameters(msg, text, 'a players name, like, fug.  E.g. /setdm fug', 1, say, function () {
+        v.mustBeDm(msg, keyword, say, function () {
+            v.mustBeUser(msg, keyword, text, say, function () {
+                if (args.length == 1) {
+                    return say(`:sob: Right, I couldn't quite understand you, you'll have to be clearer. I know you want to do something to poor @${args[0]} but I'm not sure what. Try something like /setplayer ${args[0]} hp 99`)
+                }
+            })
+        })
+    })
+
+
+
 
     var pkey = "PLAYER:" + args[0]
 
@@ -38,8 +44,8 @@ module.exports = function (keyword, msg, text, say) {
                     player.name = args[0]
                 }
                 // fug level 1
-                
-                
+
+
 
             })
 

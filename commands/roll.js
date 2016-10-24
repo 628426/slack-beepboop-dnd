@@ -6,6 +6,4 @@ module.exports = function (keyword, msg, text, say) {
 
         return say(`@${msg.body["user_name"]} rolled _${text}_  and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`)
     })
-
-
 }
