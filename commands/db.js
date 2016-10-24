@@ -2,7 +2,7 @@
 const store = require('beepboop-persist')()
 
 module.exports.setPlayer = function (name, user, operation, args, date, cb) {
-    let key = "PLAYER::" + name;
+    let key = "PLAYER_" + name;
     try {
         console.log('before set get')
         store.get(key, function (err, player) {
@@ -49,7 +49,7 @@ module.exports.setPlayer = function (name, user, operation, args, date, cb) {
 }
 
 module.exports.getPlayer = function (name, cb) {
-    let key = "PLAYER::" + name;
+    let key = "PLAYER_" + name;
     console.log('before get')
     store.get(key, function (err, player) {
         console.log('after  get')
