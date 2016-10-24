@@ -7,8 +7,14 @@ module.exports = function (keyword, msg, text, say) {
         1,
         say,
         function () {
-            var roll = new r().roll(text)
+            let args = text.split(' ') // support "reasons" for rolling i.e. /roll d20 insight into girls dress
+            let reason =  ''
+            if(args.length > 1) {
+                reason = ' (_' +  args.slice(1).join(' ') + '_)'
+            }
 
-            return say(`@${msg.body["user_name"]} rolled _${text}_  and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`)
+            var roll = new r().roll(args[0])
+
+            return say(`@${msg.body["user_name"]} rolled _${args[0]}_${reason} and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`)
         })
 }

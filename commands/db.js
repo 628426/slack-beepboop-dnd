@@ -5,6 +5,7 @@ function getPlayer(name, cb) {
     let key = "PLAYER_" + name;
     console.log('before get')
     store.get(key, function (err, player) {
+        if(player )
         player = JSON.parse(player)
         console.log('after  get')
         if (err) return cb(err)
