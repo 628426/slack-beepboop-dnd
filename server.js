@@ -12,6 +12,31 @@ console.log(new Roll().roll('d20').result)
 console.log('SLACK_VERIFY_TOKEN::' + process.env.SLACK_VERIFY_TOKEN)
 
 
+var o = {
+  name: 'griswold'
+}
+var aa = require('./commands/validation.js')
+aa.applyToObject(o, "set", ['level',1])
+
+console.log(JSON.stringify(o));
+
+aa.applyToObject(o, "set", ['level',1, "feats", "heal"])
+
+aa.applyToObject(o, "add", ['level',1, "feats", "toughness"])
+
+aa.applyToObject(o, "set", ['level',2, "feats", "bless"])
+
+aa.applyToObject(o, "add", ['level',2, "feats", "sanctify"])
+
+
+require('./commands/validation.js').applyToObject(o, "set", ['equipment', 'backpack', 'sword'])
+
+console.log(JSON.stringify(o));
+
+require('./commands/validation.js').applyToObject(o, "add", ['equipment', 'backpack', 'axe'])
+
+console.log(JSON.stringify(o));
+
 if (!process.env.PORT) throw Error('PORT missing but required')
 
 
