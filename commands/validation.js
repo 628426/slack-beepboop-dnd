@@ -6,9 +6,7 @@ module.exports.mustBeUser = function(msg, command, user, say, cb) {
         if(err) {
             return say(`":sob: Sorry, ${err} occurred looking up user list`)
         } else {
-            console.log(JSON.stringify(result.members))
             if(result.members.some((u) => {
-                console.log(`checking [${u.name}] to [${user}]`)
                 if(u.name == user) {
                     return true
                 }
@@ -74,8 +72,7 @@ function applyToObject(o, op, args) {
     if (!o) {
         o = {}
     }
-    console.log(`checking ${args[0]} and ${args[1]}`)
-    console.log(`found ${JSON.stringify(o)} `)
+
     if (args.length > 2) { // nested
         let v = null;
         if (o && o.name && o.name == args[0]) {
