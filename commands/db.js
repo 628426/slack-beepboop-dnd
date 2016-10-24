@@ -24,7 +24,7 @@ module.exports.setPlayer = function (name, user, operation, args, date, cb) {
                     on: date
                 })
                 console.log('before set set')
-                store.set(key, function (err) {
+                store.set(key, player, function (err) {
                     console.log('after  set set')
                     if (err) return cb(err)
 
