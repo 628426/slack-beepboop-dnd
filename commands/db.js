@@ -1,37 +1,45 @@
 'use strict'
 const store = require('beepboop-persist')()
 
-module.exports.setPlayer = function (name, user, operation, args, date) {
+module.exports.setPlayer = function (name, user, operation, args, date, cb) {
     let key = "PLAYER::" + name;
+    try {
+        store.get(key, function (err, player) {
+            try {
+                if (err) return cb(err)
 
-    store.get(key, function (err, player) {
-        if (err) return cb(err)
+                if (!player) {
+                    player = {}
+                    player.name = name
+                }
+                if (!player.commands) {
+                    player.commands = []
+                }
+                player.commands.push({
+                    user: user,
+                    operation: operation,
+                    args: args,
+                    on: date
+                })
 
-        if(!player) {
-            player = {}
-            player.name = name
-        }
-        if(!player.commands) {
-            player.commands = []
-        }
-        player.commands.push({
-            user: user,
-            operation: operation,
-            args: args,
-            on: date
+                store.set(key, function (err) {
+                    if (err) return cb(err)
+
+                    getPlayer(name, function (err, player) {
+                        if (err) return cb(err)
+
+                        cb(null, player)
+                    })
+                })
+            } catch(ee) {
+                return cb(ee.stack)
+            }
+
         })
-
-        store.set(key, function(err) {
-            if(err) return cb(err)
-
-            getPlayer(name, function(err, player) {
-                if(err) return cb(err)
-
-                cb(null,player)
-            })
-        })
-    
-    })
+    }
+    catch (e) {
+        return cb(e.stack)
+    }
 }
 
 module.exports.getPlayer = function (name, cb) {

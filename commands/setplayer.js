@@ -1,9 +1,8 @@
 const v = require('./validation')
 const db = require('./db')
 module.exports = function (keyword, msg, text, say) {
-    console.log(text)
     let  args = text.split(' ')
-    console.log(JSON.stringify(args))
+
     v.requiresParameters(msg, text, 'a players name, like, fug.  E.g. /setplayer fug hp 99', 1, say, function () {
         v.mustBeDm(msg, keyword, say, function () {
             v.mustBeUser(msg, keyword, args[0], say, function () {
@@ -12,6 +11,7 @@ module.exports = function (keyword, msg, text, say) {
                 }
 
                 db.setPlayer(args[0], msg.body["user_name"], "set", args.slice(1), Date.now(), function (err, player) {
+                    if(err) say(`:sob: Sorry, ${err}`)
                     say(JSON.stringify(player, null, 4))
                 })
             })
