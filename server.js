@@ -5,10 +5,6 @@ const BeepBoopConvoStore = require('slapp-convo-beepboop')
 const BeepBoopContext = require('slapp-context-beepboop')
 
 
-const Roll = require('./flows/roll/index.js')
-
-console.log(new Roll().roll('d20').result)
-
 console.log('SLACK_VERIFY_TOKEN::' + process.env.SLACK_VERIFY_TOKEN)
 
 
