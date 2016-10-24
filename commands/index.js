@@ -8,15 +8,15 @@ function wireupCommand(slapp, keyword, description, cmd) {
             try {
                 msg.say(text)
             }
-            catch (e) {
-                msg.say(':sob: Exception::' + e.toString())
+            catch (es) {
+                msg.say(':sob: Exception::' + es.toString() + os.EOL + es.stack)
             }
         }
         try {
             cmd(keyword, msg, text, say);
         }
         catch (e) {
-            say(':sob: Exception::' + e.toString())
+            say(':sob: Exception::' + e.toString() + os.EOL + e.stack)
         }
     })
 
@@ -25,8 +25,8 @@ function wireupCommand(slapp, keyword, description, cmd) {
             try {
                 msg.respond(t)
             }
-            catch (e) {
-                msg.say(':sob: Exception::' + e.toString())
+            catch (es) {
+                msg.say(':sob: Exception::' + es.toString() + os.EOL + es.stack)
             }
         }
         try {
@@ -34,7 +34,7 @@ function wireupCommand(slapp, keyword, description, cmd) {
 
         }
         catch (e) {
-            say(':sob: Exception:' + e.toString())
+            say(':sob: Exception::' + e.toString() + os.EOL + e.stack)
         }
 
     })
@@ -42,7 +42,7 @@ function wireupCommand(slapp, keyword, description, cmd) {
 
 }
 
-var dndhelp = function(keyword, msg, text, say) {
+var dndhelp = function (keyword, msg, text, say) {
     var r = '';
     var sortedCommands = commands.sort(function (a, b) {
         if (a.command > b.command) {
@@ -53,7 +53,7 @@ var dndhelp = function(keyword, msg, text, say) {
         }
         // a must be equal to b
         return 0;
-    }) 
+    })
     for (var cmdIndex = 0; cmdIndex < sortedCommands.length; cmdIndex++) {
         r += `*${sortedCommands[cmdIndex].command}* ${sortedCommands[cmdIndex].description}` + os.EOL
     }
@@ -66,6 +66,6 @@ module.exports = (slapp) => {
     wireupCommand(slapp, 'roll', 'Rolls the specified di(c)e e.g. /roll d20', require('./roll'))
     wireupCommand(slapp, 'setdm', 'Sets the specified players as dungeon master i.e. /setdm tony', require('./setDm'))
 
-    wireupCommand(slapp, 'dndhelp', 'Lists available commands e.g. /dndhelp', dndhelp )
+    wireupCommand(slapp, 'dndhelp', 'Lists available commands e.g. /dndhelp', dndhelp)
 
 }
