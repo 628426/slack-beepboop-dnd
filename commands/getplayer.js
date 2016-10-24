@@ -1,4 +1,5 @@
 const v = require('./validation')
+const db = require('./db')
 module.exports = function (keyword, msg, text, say) {
 
     v.requiresParameters(msg, text, 'a players name, like, fug.  E.g. /setplayer fug hp 99', 1, say, function () {

@@ -11,8 +11,6 @@ console.log(JSON.stringify('griswold hp 99'.split(' ')))
 
 if (!process.env.PORT) throw Error('PORT missing but required')
 
-
-
 var slapp = Slapp({
   record: 'out.jsonl',
   convo_store: BeepBoopConvoStore(),
