@@ -26,6 +26,9 @@ module.exports = function (slack, opts) {
     if (!opts || !opts.schema) {
         throw `No schema passed, try require('slack-persist')(slack, {schema: 'YourAppName'})`
     }
+    if (!opts || !opts.token) {
+        throw `No token passed, try require('slack-persist')(slack, {token: 'VALLID TOKEN'})`
+    }
     if (opts && !opts.channel) {
         opts.channel = 'data'
     }
@@ -33,16 +36,16 @@ module.exports = function (slack, opts) {
 
     persistance.set = function (key, value, cb) {
         if (!this.channelCreated) {
-            checkOrCreateChannel(slack, token, opts.channel, function (err) {
+            checkOrCreateChannel(slack, opts.token, opts.channel, function (err) {
                 if(err) return cb(err)
                 this.channelCreated = true;
-                setData(slack, token, opts.schema, opts.channel, key, function (err, savedValue) {
+                setData(slack, opts.token, opts.schema, opts.channel, key, function (err, savedValue) {
                     if (err) return cb(err)
                     return cb(null, savedValue)
                 })
             })
         } else {
-            setData(slack, token, opts.schema, opts.channel, key, function (err, savedValue) {
+            setData(slack, opts.token, opts.schema, opts.channel, key, function (err, savedValue) {
                 if (err) return cb(err)
                 return cb(null, savedValue)
             })
