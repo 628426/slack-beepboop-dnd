@@ -38,9 +38,11 @@ module.exports = function (slack, opts) {
 
     persistance.set = function (key, value, cb) {
         if (!this.channelCreated) {
+            console.log('about to check channel ' + opts.channel + ' is created')
             checkOrCreateChannel(slack, opts.token, opts.channel, function (err) {
                 if (err) return cb('checkOrCreateChannel::' + err)
                 this.channelCreated = true;
+                
                 setData(slack, opts.token, opts.schema, opts.channel, key, function (err, savedValue) {
                     if (err) return cb('setData::' + err)
                     return cb(null, savedValue)
