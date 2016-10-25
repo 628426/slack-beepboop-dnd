@@ -2,11 +2,11 @@ function checkOrCreateChannel(slack, token, channel, cb) {
     slack.channels.info({ token: token, channel: channel }, function (err, channel) {
         if (err && err == 'channel_not_found') {
             slack.channels.create({ token: token, channel: channel }, function (err, channel) {
-                if (err) return cb(err)
-                cb()
+                if (err) return cb('channels.create::' + err)
+                return cb()
             })
         } else if (err) {
-            return cb(err)
+            return cb('channels.info::' + err)
         } else {
             return cb(null)
         }
@@ -16,7 +16,7 @@ function checkOrCreateChannel(slack, token, channel, cb) {
 
 function setData(slack, token, schema, channel, key, value, cb) {
     slack.files.upload({ token: token, content: JSON.stringify(value, null, 4), filetype: 'json', filename: schema + '.' + key + '.json' }, function (err, file) {
-        if (err) return cb(err)
+        if (err) return cb('files.upload::' + err)
         value.updated = file.updated
         cb(null, value)
     })
@@ -37,16 +37,16 @@ module.exports = function (slack, opts) {
     persistance.set = function (key, value, cb) {
         if (!this.channelCreated) {
             checkOrCreateChannel(slack, opts.token, opts.channel, function (err) {
-                if(err) return cb(err)
+                if(err) return cb('checkOrCreateChannel::' + err)
                 this.channelCreated = true;
                 setData(slack, opts.token, opts.schema, opts.channel, key, function (err, savedValue) {
-                    if (err) return cb(err)
+                    if (err) return cb('setData::' + err)
                     return cb(null, savedValue)
                 })
             })
         } else {
             setData(slack, opts.token, opts.schema, opts.channel, key, function (err, savedValue) {
-                if (err) return cb(err)
+                if (err) return cb('setData::' + err)
                 return cb(null, savedValue)
             })
         }
