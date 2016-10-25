@@ -24,13 +24,14 @@ function setData(slack, token, schema, channel, key, value, cb) {
 }
 
 module.exports = function (slack, opts) {
-    if (!opts || !opts.schema) {
+    if(!opts) opts = {}
+    if (!opts.schema) {
         throw `No schema passed, try require('slack-persist')(slack, {schema: 'YourAppName'})`
     }
-    if (!opts || !opts.token) {
+    if (!opts.token) {
         throw `No token passed, try require('slack-persist')(slack, {token: 'VALLID TOKEN'})`
     }
-    if (opts && !opts.channel) {
+    if (!opts.channel) {
         opts.channel = 'data'
     }
     let persistance = {}
