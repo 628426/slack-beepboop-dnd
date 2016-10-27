@@ -18,6 +18,7 @@ function checkOrCreateChannel(slack, token, requestedChannel, cb) {
 
 function setData(slack, token, schema, channel, key, value, cb) {
     slack.files.upload({ token: token, content: JSON.stringify(value, null, 4), filetype: 'json', filename: schema + '.' + key + '.json' }, function (err, file) {
+        console.log(`${JSON.stringify(file)}]`)
         if (err) return cb('files.upload::' + err)
         value.updated = file.updated
         return cb(null, value)
