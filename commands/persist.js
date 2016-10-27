@@ -4,10 +4,10 @@ function checkOrCreateChannel(slack, token, requestedChannel, cb) {
         if (err && err == 'Error: channel_not_found') {
             console.log('creating channel:'+requestedChannel)
             slack.channels.create({ token: token, name: requestedChannel }, function (errr, channel) {
-                if (errr) return cb('channels.create::' + errr)
+                if (errr && errr != 'Error: name_taken') return cb('channels.create::' + errr)
                 return cb()
             })
-        } else if (err && err != 'Error: name_taken') {
+        } else if (err) {
             return cb('channels.info::' + err)
         } else {
             return cb(null)
