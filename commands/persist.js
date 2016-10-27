@@ -6,7 +6,7 @@ function checkOrCreateChannel(slack, token, requestedChannel, cb) {
                 if (errr) return cb('channels.create::' + errr)
                 return cb()
             })
-        } else if (err) {
+        } else if (err != 'Error: name_taken') {
             return cb('channels.info::' + err)
         } else {
             return cb(null)
