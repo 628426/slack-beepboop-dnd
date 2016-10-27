@@ -2,7 +2,7 @@ function checkOrCreateChannel(slack, token, requestedChannel, cb) {
     slack.channels.info({ token: token, channel: requestedChannel }, function (err, channel) {
         console.log(`${err}]`)
         if (err && err == 'Error: channel_not_found') {
-            console.log('creating channel:'+requestedChannel)
+            console.log('creating channel:' + requestedChannel)
             slack.channels.create({ token: token, name: requestedChannel }, function (errr, channel) {
                 if (errr && errr != 'Error: name_taken') return cb('channels.create::' + errr)
                 return cb()
@@ -17,7 +17,7 @@ function checkOrCreateChannel(slack, token, requestedChannel, cb) {
 
 
 function setData(slack, token, schema, channel, key, value, cb) {
-    slack.files.upload({ token: token, content: JSON.stringify(value, null, 4), filetype: 'json', filename: schema + '.' + key + '.json' }, function (err, file) {
+    slack.files.upload({ token: token, content: JSON.stringify(value, null, 4), filetype: 'json', filename: schema + '.' + key + '.json', channels: channel}, function (err, file) {
         console.log(`${JSON.stringify(file)}]`)
         if (err) return cb('files.upload::' + err)
         value.updated = file.updated
@@ -26,7 +26,7 @@ function setData(slack, token, schema, channel, key, value, cb) {
 }
 
 module.exports = function (slack, opts) {
-    if(!opts) opts = {}
+    if (!opts) opts = {}
     if (!opts.schema) {
         throw `No schema passed, try require('slack-persist')(slack, {schema: 'YourAppName'})`
     }
@@ -44,14 +44,14 @@ module.exports = function (slack, opts) {
             checkOrCreateChannel(slack, opts.token, opts.channel, function (err) {
                 if (err) return cb('checkOrCreateChannel::' + err)
                 this.channelCreated = true;
-                
-                setData(slack, opts.token, opts.schema, opts.channel, key, function (err, savedValue) {
+
+                setData(slack, opts.token, opts.schema, opts.channel, key, value, function (err, savedValue) {
                     if (err) return cb('setData::' + err)
                     return cb(null, savedValue)
                 })
             })
         } else {
-            setData(slack, opts.token, opts.schema, opts.channel, key, function (err, savedValue) {
+            setData(slack, opts.token, opts.schema, opts.channel, key, value, function (err, savedValue) {
                 if (err) return cb('setData::' + err)
                 return cb(null, savedValue)
             })
