@@ -6,5 +6,6 @@ slackscopes:
   - commands
   - reactions:write
   - channels:write
+  - channels:read
   - files:read
   - files:write:user
