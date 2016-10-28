@@ -9,7 +9,9 @@ module.exports = function (store) {
             if (err) return cb(err)
             console.log(`getPlayer.get::Got ${player} for ${key}`)
             if (player && player.commands && player.commands.length) {
+                console.log('applying commands')
                 for (var c = 0; c <= player.commands.length; c++) {
+                    console.log('applying command ')
                     db.applyToObject(player, player.commands[c].operation, player.commands[c].args)
                 }
             }
