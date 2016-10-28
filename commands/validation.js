@@ -1,5 +1,3 @@
-const store = require('beepboop-persist')()
-
 module.exports.mustBeUser = function (msg, command, user, say, cb) {
     var slapp = msg._slapp;
     slapp.client.users.list({ token: msg.meta.bot_token }, function (err, result) {
@@ -20,19 +18,18 @@ module.exports.mustBeUser = function (msg, command, user, say, cb) {
 }
 
 module.exports.mustBeDm = function (msg, command, say, cb) {
+    let store = require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' })
     store.get("DM", function (err, data) {
         let user = msg.body["user_name"]
         if (err) {
             return say(`":sob: Sorry, ${err} occurred`)
         }
-        var dm = data || "griswold"
+        var dm = data
 
-        if (dm != user && user != 'griswold') {
+        if (dm && dm != user) {
             return say(`:sob: Sorry, @${dm} is currently the dm and is the only player allowed to user the /${command} command`)
         }
-
         cb()
-
     })
 }
 
