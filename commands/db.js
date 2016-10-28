@@ -16,8 +16,8 @@ module.exports = function (store) {
                     db.applyToObject(player, player.commands[c].operation, player.commands[c].args)
                 }
             }
-
-            cb(null, player)
+            console.log(player)
+            return cb(null, player)
 
         })
     }
