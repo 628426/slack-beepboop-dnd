@@ -14,8 +14,11 @@ module.exports = function (store) {
                 for (var c = 0; c <= player.commands.length; c++) {
                     console.log('applying command ')
                     db.applyToObject(player, player.commands[c].operation, player.commands[c].args)
+                    console.log('applied command ')
                 }
+                console.log('finished commands ')
             }
+            console.log('cbing ')
             console.log(`player:: ${player}`)
             return cb(null, player)
 
@@ -41,9 +44,9 @@ module.exports = function (store) {
                         args: args,
                         on: date
                     })
-                    
+
                     store.set(key, JSON.stringify(player), function (err) {
-                    
+
                         if (err) return cb(err)
 
                         getPlayer(name, function (err, player) {
