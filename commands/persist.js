@@ -27,7 +27,7 @@ function getData(slack, token, schema, channel, key, cb) {
             if (errr) return cb('files.info:' + errr)
             if (!info) return cb(`files.info returned null`)
             if (!info.content) {
-
+                return cb(null, null)
             }
             try {
                 let parsedContent = JSON.parse(info.content)

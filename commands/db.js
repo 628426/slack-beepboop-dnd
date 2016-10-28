@@ -8,6 +8,7 @@ module.exports = function (store) {
         store.get(key, function (err, player) {
             if (err) return cb(err)
             console.log(`getPlayer.get::Got ${player} for ${key}`)
+            player = JSON.parse(player)
             if (player && player.commands && player.commands.length) {
                 console.log('applying commands')
                 for (var c = 0; c <= player.commands.length; c++) {
