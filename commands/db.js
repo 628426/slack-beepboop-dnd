@@ -23,7 +23,6 @@ module.exports = function (store) {
         try {
             store.get(key, function (err, player) {
                 try {
-                    player = JSON.parse(player)
                     if (err) return cb(err)
 
                     if (!player) {
