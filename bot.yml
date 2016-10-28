@@ -9,3 +9,4 @@ slackscopes:
   - channels:read
   - files:read
   - files:write:user
+  - search:read
