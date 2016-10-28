@@ -1,78 +1,70 @@
 'use strict'
-const store = require('beepboop-persist')()
 
-function getPlayer(name, cb) {
-    let key = "PLAYER_" + name;
-    console.log('before get')
-    store.get(key, function (err, player) {
-        if(player )
-        player = JSON.parse(player)
-        console.log('after  get')
-        if (err) return cb(err)
-
-        if (player && player.commands && player.commands.length) {
-            for (var c = 0; c <= player.commands.length; c++) {
-                db.applyToObject(p, player.commands[c].operation, player.commands[c].args)
-            }
-        }
-
-        cb(null, player)
-
-    })
-
-}
-
-
-module.exports.setPlayer = function (name, user, operation, args, date, cb) {
-    let key = "PLAYER_" + name;
-    try {
-        console.log('before set get')
+module.exports = function (store) {
+    let db = {}
+    db.getPlayer = function (name, cb) {
+        let key = "PLAYER_" + name;
+        console.log('before get')
         store.get(key, function (err, player) {
-            try {
-                player = JSON.parse(player)
-                if (err) return cb(err)
+            if (err) return cb(err)
 
-                if (!player) {
-                    player = {}
-                    player.name = name
+            if (player && player.commands && player.commands.length) {
+                for (var c = 0; c <= player.commands.length; c++) {
+                    db.applyToObject(p, player.commands[c].operation, player.commands[c].args)
                 }
-                if (!player.commands) {
-                    player.commands = []
-                }
-                player.commands.push({
-                    user: user,
-                    operation: operation,
-                    args: args,
-                    on: date
-                })
-                console.log('before set set')
-                store.set(key, JSON.stringify(player), function (err) {
-                    console.log('after  set set')
-                    if (err) return cb(err)
-
-                    getPlayer(name, function (err, player) {
-                        console.log('after set set get')
-                        if (err) return cb(err)
-
-                        cb(null, player)
-                    })
-                })
-            } catch (ee) {
-                console.log('ee')
-                return cb(ee.stack)
             }
+
+            cb(null, player)
 
         })
     }
-    catch (e) {
-        console.log('e')
-        return cb(e.stack)
+    db.setPlayer = function (name, user, operation, args, date, cb) {
+        let key = "PLAYER_" + name;
+        try {
+            store.get(key, function (err, player) {
+                try {
+                    player = JSON.parse(player)
+                    if (err) return cb(err)
+
+                    if (!player) {
+                        player = {}
+                        player.name = name
+                    }
+                    if (!player.commands) {
+                        player.commands = []
+                    }
+                    player.commands.push({
+                        user: user,
+                        operation: operation,
+                        args: args,
+                        on: date
+                    })
+                    
+                    store.set(key, JSON.stringify(player), function (err) {
+                    
+                        if (err) return cb(err)
+
+                        getPlayer(name, function (err, player) {
+                            console.log('after set set get')
+                            if (err) return cb(err)
+
+                            cb(null, player)
+                        })
+                    })
+                } catch (ee) {
+                    console.log('ee')
+                    return cb(ee.stack)
+                }
+
+            })
+        }
+        catch (e) {
+            console.log('e')
+            return cb(e.stack)
+        }
     }
 }
 
-module.exports.getPlayer = function (name, cb) {
-    getPlayer(name, cb)
-}
 
 function isObject(obj) {
     return obj === Object(obj);
