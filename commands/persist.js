@@ -18,7 +18,7 @@ function checkOrCreateChannel(slack, token, requestedChannel, cb) {
 function getData(slack, token, schema, channel, key, cb) {
     slack.search.files({ token: token, sort: 'timestamp', count: 1, query: schema + '.' + key + '.json' }, function (err, results) {
         if (err) return cb('search.files:' + err)
-        if (!results || !results.files || !results.files.total) return cb(`search.files returned ${JSON.stringify(results)}`)
+        if (!results || !results.files) return cb(`search.files returned ${JSON.stringify(results)}`)
         if (results.files.total == 0 || results.files.matches.length <= 0) {
             return cb(null, null)
         }
