@@ -3,7 +3,7 @@ const store = require('beepboop-persist')()
 
 
 module.exports = function (keyword, msg, text, say) {
-    require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }).get("DM", text, function (err, output) {
+    require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }).get("DM", function (err, output) {
         if (err) {
             return say(`:sob: Sorry, ${err} occurred`)
         }
