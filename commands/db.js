@@ -10,7 +10,7 @@ module.exports = function (store) {
             console.log(`getPlayer.get::Got ${player} for ${key}`)
             if (player && player.commands && player.commands.length) {
                 for (var c = 0; c <= player.commands.length; c++) {
-                    db.applyToObject(p, player.commands[c].operation, player.commands[c].args)
+                    db.applyToObject(player, player.commands[c].operation, player.commands[c].args)
                 }
             }
 

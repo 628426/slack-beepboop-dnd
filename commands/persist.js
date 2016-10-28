@@ -30,7 +30,8 @@ function getData(slack, token, schema, channel, key, cb) {
 
             }
             try {
-                return cb(null, JSON.parse(info.content))
+                let parsedContent = JSON.parse(info.content)
+                return cb(null, parsedContent)
             } catch (parseException) {
                 return cb(`Couldn't parse ${info.content} ${parseException} ${parseException.stack}`)
             }
