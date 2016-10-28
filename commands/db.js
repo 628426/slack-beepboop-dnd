@@ -63,6 +63,8 @@ module.exports = function (store) {
             return cb(e.stack)
         }
     }
+
+    return db
 }
 
 
@@ -72,9 +74,6 @@ function isObject(obj) {
 function isArray(obj) {
     return
 }
-
-
-
 
 function applyToObject(o, op, args) {
 
