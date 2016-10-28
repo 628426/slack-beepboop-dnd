@@ -20,13 +20,13 @@ function getData(slack, token, schema, channel, key, cb) {
         if (err) return cb('search.files:' + err)
         if (!results || !results.files || !results.files.total) return cb(`search.files returned ${JSON.stringify(results)}`)
         let id = results.files.matches[0].id
-        slack.files.info({ token: token, file: id, count: 1 }, function (errr, file) {
+        slack.files.info({ token: token, file: id, count: 1 }, function (errr, info) {
             if (errr) return cb('files.info:' + errr)
-            if (!file) return cb(`files.info returned null`)
+            if (!info) return cb(`files.info returned null`)
             try {
-                return JSON.parse(file.file.content)
+                return JSON.parse(info.content)
             } catch (parseException) {
-                return cb(`Couldn't parse ${file.file.content} ${parseException} ${parseException.stack}`)
+                return cb(`Couldn't parse ${info.content} ${parseException} ${parseException.stack}`)
             }
         })
     })
