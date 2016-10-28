@@ -23,7 +23,11 @@ function getData(slack, token, schema, channel, key, cb) {
         slack.files.info({ token: token, file: id, count: 1 }, function (errr, file) {
             if (errr) return cb('files.info:' + errr)
             if (!file) return cb(`files.info returned null`)
-            return JSON.parse(file.file.content)
+            try {
+                return JSON.parse(file.file.content)
+            } catch (parseException) {
+                return cb(`Couldn't parse ${file.file.content} ${parseException} ${parseException.stack}`)
+            }
         })
     })
 }
