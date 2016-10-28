@@ -19,7 +19,7 @@ function getData(slack, token, schema, channel, key, cb) {
     slack.search.files({ token: token, sort: 'timestamp', count: 1, query: schema + '.' + key + '.json' }, function (err, results) {
         if (err) return cb('search.files:' + err)
         if (!results || !results.files || !results.files.total) return cb(`search.files returned ${JSON.stringify(results)}`)
-        let id = results.matches[0].id
+        let id = results.files.matches[0].id
         slack.files.info({ token: token, file: id, count: 1 }, function (errr, file) {
             if (errr) return cb('files.info:' + errr)
             if (!file) return cb(`files.info returned null`)
