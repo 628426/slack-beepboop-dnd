@@ -1,6 +1,6 @@
 function checkOrCreateChannel(slack, token, requestedChannel, cb) {
     slack.channels.info({ token: token, channel: requestedChannel }, function (err, channel) {
-        console.log(`${err}]`)
+        console.log(`slack.channels.info.${requestedChannel}[${err}]`)
         if (err && err == 'Error: channel_not_found') {
             console.log('creating channel:' + requestedChannel)
             slack.channels.create({ token: token, name: requestedChannel }, function (errr, channel) {
@@ -19,12 +19,18 @@ function getData(slack, token, schema, channel, key, cb) {
     slack.search.files({ token: token, sort: 'timestamp', count: 1, query: schema + '.' + key + '.json' }, function (err, results) {
         if (err) return cb('search.files:' + err)
         if (!results || !results.files || !results.files.total) return cb(`search.files returned ${JSON.stringify(results)}`)
+        if (results.files.total == 0 || results.files.matches.length <= 0) {
+            return cb(null, null)
+        }
         let id = results.files.matches[0].id
         slack.files.info({ token: token, file: id, count: 1 }, function (errr, info) {
             if (errr) return cb('files.info:' + errr)
             if (!info) return cb(`files.info returned null`)
+            if (!info.content) {
+
+            }
             try {
-                return JSON.parse(info.content)
+                return cb(null, JSON.parse(info.content))
             } catch (parseException) {
                 return cb(`Couldn't parse ${info.content} ${parseException} ${parseException.stack}`)
             }
@@ -34,7 +40,7 @@ function getData(slack, token, schema, channel, key, cb) {
 
 function setData(slack, token, schema, channel, key, value, cb) {
     slack.files.upload({ token: token, content: JSON.stringify(value, null, 4), filetype: 'json', filename: schema + '.' + key + '.json', channels: channel }, function (err, file) {
-        console.log(`${JSON.stringify(file)}]`)
+        console.log(`slack.files.upload.${JSON.stringify(file)}`)
         if (err) return cb('files.upload::' + err)
         value.updated = file.updated
         return cb(null, value)
@@ -84,7 +90,7 @@ module.exports = function (slack, opts) {
                 })
             })
         } else {
-            getData(slack, opts.token, opts.schema, opts.channel, key, function (err, savedValue) {
+            getData(slack, opts.token, opts.schema, opts.channel, key, function (errr, savedValue) {
                 if (err) return cb('setData::' + err)
                 return cb(null, savedValue)
             })
