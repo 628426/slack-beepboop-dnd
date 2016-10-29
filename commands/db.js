@@ -8,19 +8,21 @@ module.exports = function (store) {
         store.get(key, function (err, player) {
             if (err) return cb(err)
             console.log(`getPlayer.get::Got ${player} for ${key}`)
-            player = JSON.parse(player)
-            if (player && player.commands && player.commands.length) {
+            let playerWithCommands = JSON.parse(player)
+            let playerToReturn = {}
+            playerToReturn.name = playerWithCommands.name
+            if (playerWithCommands && playerWithCommands.commands && playerWithCommands.commands.length) {
                 console.log('applying commands')
                 for (var c = 0; c <= player.commands.length; c++) {
                     console.log('applying command ')
-                    applyToObject(player, player.commands[c].operation, player.commands[c].args)
+                    applyToObject(playerToReturn, playerWithCommands.commands[c].operation, playerWithCommands.commands[c].args)
                     console.log('applied command ')
                 }
                 console.log('finished commands ')
             }
             console.log('cbing ')
-            console.log(`player:: ${player}`)
-            return cb(null, player)
+            console.log(`player:: ${playerToReturn}`)
+            return cb(null, playerToReturn)
 
         })
     }
