@@ -4,7 +4,6 @@ const Slapp = require('slapp')
 const BeepBoopConvoStore = require('slapp-convo-beepboop')
 const BeepBoopContext = require('slapp-context-beepboop')
 
-console.log(require('./commands/normaliser.js').toNormalForm('wis'))
 console.log('SLACK_VERIFY_TOKEN::' + process.env.SLACK_VERIFY_TOKEN)
 
 if (!process.env.PORT) throw Error('PORT missing but required')

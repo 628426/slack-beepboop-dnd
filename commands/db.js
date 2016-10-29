@@ -12,16 +12,10 @@ module.exports = function (store) {
             let playerToReturn = {}
             playerToReturn.name = playerWithCommands.name
             if (playerWithCommands && playerWithCommands.commands && playerWithCommands.commands.length) {
-                console.log('applying commands')
                 for (var c = 0; c < playerWithCommands.commands.length; c++) {
-                    console.log('applying command ')
                     applyToObject(playerToReturn, playerWithCommands.commands[c].operation, playerWithCommands.commands[c].args)
-                    console.log('applied command ')
                 }
-                console.log('finished commands ')
             }
-            console.log('cbing ')
-            console.log(`player:: ${playerToReturn}`)
             return cb(null, playerToReturn)
 
         })
@@ -43,9 +37,9 @@ module.exports = function (store) {
                     if (!loadedPlayer.commands) {
                         loadedPlayer.commands = []
                     }
-                    let normalisedArgs= args
-                    for(var i = 0; i < normalisedArgs.length; i++) {
-                        normalisedArgs[i] = n.toNormalForm(normalisedArgs[i]) 
+                    let normalisedArgs = args
+                    for (var i = 0; i < normalisedArgs.length; i++) {
+                        normalisedArgs[i] = n.toNormalForm(normalisedArgs[i])
                     }
                     loadedPlayer.commands.push({
                         user: user,
@@ -62,7 +56,7 @@ module.exports = function (store) {
                             console.log('after set set get')
                             if (err) return cb(err)
 
-                            cb(null, Innerplayer)
+                            return cb(null, Innerplayer)
                         })
                     })
                 } catch (ee) {
