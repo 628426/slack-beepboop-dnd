@@ -1,5 +1,6 @@
 'use strict'
 const os = require('os')
+const n = require('./normaliser.js')
 var commands = []
 function wireupCommand(slapp, keyword, description, cmd) {
     commands.push({ command: keyword, description: description })
