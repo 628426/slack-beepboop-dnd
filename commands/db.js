@@ -13,7 +13,7 @@ module.exports = function (store) {
             playerToReturn.name = playerWithCommands.name
             if (playerWithCommands && playerWithCommands.commands && playerWithCommands.commands.length) {
                 console.log('applying commands')
-                for (var c = 0; c <= playerWithCommands.commands.length; c++) {
+                for (var c = 0; c < playerWithCommands.commands.length; c++) {
                     console.log('applying command ')
                     applyToObject(playerToReturn, playerWithCommands.commands[c].operation, playerWithCommands.commands[c].args)
                     console.log('applied command ')
