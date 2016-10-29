@@ -53,7 +53,7 @@ module.exports = function (store) {
 
                         if (err) return cb(err)
 
-                        getPlayer(name, function (err, Innerplayer) {
+                        this.getPlayer(name, function (err, Innerplayer) {
                             console.log('after set set get')
                             if (err) return cb(err)
 
