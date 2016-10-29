@@ -6,7 +6,15 @@ module.exports = function (keyword, msg, text, say) {
         v.mustBeUser(msg, keyword, text, say, function () {
 
             db.getPlayer(text, function (err, player) {
-                say(JSON.stringify(player, null, 4))
+                let args = text.split(' ')
+                let output = player
+                if(args.length > 1) {
+                    for(var a in args) {
+                        let an = require('./normalise.js').toNormalForm(args[a])
+                        output = output[an]
+                    }
+                }
+                say(JSON.stringify(output, null, 4))
             })
         })
     })

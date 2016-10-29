@@ -1,5 +1,5 @@
 'use strict'
-
+const n = require('./normalise.js')
 module.exports = function (store) {
     let db = {}
     db.getPlayer = function (name, cb) {
@@ -45,7 +45,7 @@ module.exports = function (store) {
                     }
                     let normalisedArgs= args
                     for(var i = 0; i < normalisedArgs.length; i++) {
-                        normalisedArgs = 
+                        normalisedArgs[i] = n.toNormalForm(normalisedArgs[i]) 
                     }
                     loadedPlayer.commands.push({
                         user: user,
