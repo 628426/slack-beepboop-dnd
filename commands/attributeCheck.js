@@ -21,10 +21,12 @@ module.exports = function (a) {
 
                 let rs = `d20+${(player[attribute] - 10) / 2}`
                 console.log(`rolling ${rs}`)
-
+                let flavour  = ``
                 var roll = new r().roll(rs)
-
-                return say(`@${msg.body["user_name"]} rolled _${rs}_ for a ${attribute} check and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`)
+                if(text) {
+                    flavour = `(_${flavour}_) `
+                }
+                return say(`@${msg.body["user_name"]} rolled _${rs}_ for a ${attribute} check ${flavour}and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`)
             }
         })
     }
