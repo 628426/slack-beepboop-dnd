@@ -63,12 +63,20 @@ var dndhelp = function (keyword, msg, text, say) {
 // list out explicitly to control order
 module.exports = (slapp) => {
 
+    for (var c in ['intelligence', 'wisdom', 'charisma', 'dexterity', 'strength', 'constitution']) {
+        wireupCommand(slapp, c, `Rolls for ${c}, this is the same as /roll d20 + your characters ${c} bonus`, require('./attributeCheck')(c))
+    }
+
+    for (var c in ['int', 'wis', 'cha', 'dex', 'str', 'con']) {
+        wireupCommand(slapp, c, `A shorthand alias for /${c}`, require('./attributeCheck')(c))
+    }
+
     wireupCommand(slapp, 'roll', 'Rolls the specified di(c)e e.g. /roll d20', require('./roll'))
     wireupCommand(slapp, 'getplayer', 'Get the specified player i.e. /getplayer fug ', require('./getplayer'))
     wireupCommand(slapp, 'setplayer', 'Sets attributes of the specified player i.e. /setplayer fug hp 99', require('./setplayer'))
     wireupCommand(slapp, 'setdm', 'Sets the specified player as dungeon master i.e. /setdm tony', require('./setDm'))
 
-    wireupCommand(slapp, 'getdm', 'Returnns the current dm i.e. /getdm ', require('./getDm'))    
+    wireupCommand(slapp, 'getdm', 'Returnns the current dm i.e. /getdm ', require('./getDm'))
 
     wireupCommand(slapp, 'dndhelp', 'Lists available commands e.g. /dndhelp', dndhelp)
 
