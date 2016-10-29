@@ -13,7 +13,7 @@ module.exports = function (store) {
                 console.log('applying commands')
                 for (var c = 0; c <= player.commands.length; c++) {
                     console.log('applying command ')
-                    db.applyToObject(player, player.commands[c].operation, player.commands[c].args)
+                    applyToObject(player, player.commands[c].operation, player.commands[c].args)
                     console.log('applied command ')
                 }
                 console.log('finished commands ')
@@ -188,7 +188,3 @@ function applyToObject(o, op, args) {
     }
 
 }
-
-module.exports.applyToObject = function (obj, op, args) {
-    applyToObject(obj, op, args)
-} 
