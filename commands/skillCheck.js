@@ -8,7 +8,7 @@ module.exports = function (s, a) {
 
         let skill = n.toNormalForm(s)
         let attribute = n.toNormalForm(a)
-        let user = msg.body["user_name"]
+        let user = msg.body["user_name"].trim()
         let db = require('./db')(require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }))
 
         db.getPlayer(user, function (err, player) {
