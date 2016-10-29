@@ -8,7 +8,8 @@ var synonyms = [
     ['intimidation','intimidate'],
     ['performance','perform'],
     ['persuasion','persuade'],
-    ['investigation','investigate']
+    ['investigation','investigate'],
+    ['proficiencies', 'prof', 'proficencies']
 ]
 
 var toNormalForm = function (s) { 
