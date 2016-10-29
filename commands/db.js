@@ -43,6 +43,10 @@ module.exports = function (store) {
                     if (!loadedPlayer.commands) {
                         loadedPlayer.commands = []
                     }
+                    let normalisedArgs= args
+                    for(var i = 0; i < normalisedArgs.length; i++) {
+                        normalisedArgs = 
+                    }
                     loadedPlayer.commands.push({
                         user: user,
                         operation: operation,

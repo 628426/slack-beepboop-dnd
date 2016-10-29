@@ -63,11 +63,16 @@ var dndhelp = function (keyword, msg, text, say) {
 // list out explicitly to control order
 module.exports = (slapp) => {
 
-    for (var c in ['intelligence', 'wisdom', 'charisma', 'dexterity', 'strength', 'constitution']) {
-        wireupCommand(slapp, c, `Rolls for ${c}, this is the same as /roll d20 + your characters ${c} bonus`, require('./attributeCheck')(c))
+    let names = ['intelligence', 'wisdom', 'charisma', 'dexterity', 'strength', 'constitution']
+
+    for (var c in names ) {
+        wireupCommand(slapp, names[c], `Rolls for ${names[c]}, this is the same as /roll d20 + your characters ${names[c]} bonus`, require('./attributeCheck')(names[c]))
     }
 
-    for (var c in ['int', 'wis', 'cha', 'dex', 'str', 'con']) {
+    let abbreviations = ['int', 'wis', 'cha', 'dex', 'str', 'con']
+
+    for (var a in abbreviations ) {
+        let c = abbreviations[a]
         wireupCommand(slapp, c, `A shorthand alias for /${c}`, require('./attributeCheck')(c))
     }
 
