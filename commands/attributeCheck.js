@@ -12,7 +12,7 @@ module.exports = function (a) {
         let db = require('./db')(require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }))
 
         db.getPlayer(user, function (err, player) {
-            console.log(`PAYERBACK::${player}``)
+            console.log(`PAYERBACK::${player}`)
             if (!player) {
                 console.log(JSON.stringify(msg.body))
                 return say(`:sob: Sorry, I couldn't find your player [${user}].  Have your dm use /setplayer ${user} ${attribute} value `)
