@@ -11,7 +11,8 @@ var synonyms = [
     ['investigation','investigate']
 ]
 
-var toNormalForm = function (s) {
+var toNormalForm = function (s) { 
+    try {
     if(s) {
         for (var synset in synonyms) {
             for (var syn in synonyms[synset]) {
@@ -20,6 +21,9 @@ var toNormalForm = function (s) {
                 }
             }
         }
+    }
+    } catch(e) {
+        throw `Could not get normal form of [${s}] because of ${e}\r\n ${e.stack}`
     }
     return s;
 }
