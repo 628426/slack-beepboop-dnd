@@ -1,5 +1,7 @@
 const n = require('./normaliser.js')
 
+const r = require('./roll/index.js')
+
 
 
 module.exports = function (s, a) {
