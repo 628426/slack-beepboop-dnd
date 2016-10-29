@@ -10,7 +10,7 @@ var synonyms = [
 module.exports.toNormalForm = function(s) {
     for(var synset in synonyms) {
         for(var syn in synonyms[synset]) {
-            if(synonyms[synset][syn] == s.toLowerCase) {
+            if(synonyms[synset][syn] == s.toLowerCase()) {
                 return synonyms[synset][0]
             }
         }
