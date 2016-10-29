@@ -9,8 +9,9 @@ module.exports = function (keyword, msg, text, say) {
                 let args = text.split(' ')
                 let output = player
                 if(args.length > 1) {
-                    for(var a in args.slice(1)) {
-                        let an = require('./normaliser.js').toNormalForm(args[a])
+                    let properties = args.slice(1)
+                    for(var a in properties) {
+                        let an = require('./normaliser.js').toNormalForm(properties[a])
                         output = output[an]
                     }
                 }
