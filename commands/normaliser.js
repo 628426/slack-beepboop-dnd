@@ -15,5 +15,5 @@ module.exports.toNormalForm = function(s) {
             }
         }
     }
-    return null;
+    return s;
 }
