@@ -33,7 +33,7 @@ module.exports = function (s, a) {
 
                 let rs = `d20+${Math.floor((player[attribute] - 10) / 2)}`
                 if(isProficient && player.level) {
-                    rs += '+' + (player.level / 4).toString()
+                    rs += '+' + Math.floor((player.level / 4)).toString()
                 }
                 console.log(`rolling ${rs}`)
                 let flavour = ``
