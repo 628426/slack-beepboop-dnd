@@ -31,7 +31,7 @@ module.exports = function (s, a) {
                     profWarn = `(WARNING: Couldn't find any proficiencies for ${user}, have your d use /setplayer ${user} proficiencies stealth`
                 }
 
-                let rs = `d20+${(player[attribute] - 10) / 2}`
+                let rs = `d20+${Math.floor((player[attribute] - 10) / 2)}`
                 if(isProficient && player.level) {
                     rs += '+' + (player.level / 4).toString()
                 }

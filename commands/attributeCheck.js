@@ -22,7 +22,7 @@ module.exports = function (a) {
                 if (text && text.toLowerCase() == 'passive') {
                     return say(`@${user}'s passive ${attribute} is ${(10 + player[attribute]).toString()} (10 natural + ${attribute} modifier)`)
                 } else {
-                    let rs = `d20+${(player[attribute] - 10) / 2}`
+                    var rs = `d20+${Math.floor((player[attribute] - 10) / 2)}`
                     console.log(`rolling ${rs}`)
                     let flavour = ``
                     var roll = new r().roll(rs)
