@@ -32,13 +32,15 @@ module.exports = function (store) {
             store.get(key, function (err, player) {
                 try {
                     if (err) return cb(err)
-
+                    let loadedPlayer = {}
                     if (!player) {
-                        player = {}
-                        player.name = name
+                        loadedPlayer = {}
+                        loadedPlayer.name = name
+                    } else {
+                        loadedPlayer = JSON.parse(player)
                     }
-                    if (!player.commands) {
-                        player.commands = []
+                    if (!loadedPlayer.commands) {
+                        loadedPlayer.commands = []
                     }
                     player.commands.push({
                         user: user,
