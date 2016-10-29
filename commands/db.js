@@ -27,6 +27,7 @@ module.exports = function (store) {
         })
     }
     db.setPlayer = function (name, user, operation, args, date, cb) {
+        let me = this
         let key = "PLAYER_" + name;
         try {
             store.get(key, function (err, player) {
@@ -53,7 +54,7 @@ module.exports = function (store) {
 
                         if (err) return cb(err)
 
-                        this.getPlayer(name, function (err, Innerplayer) {
+                        me.getPlayer(name, function (err, Innerplayer) {
                             console.log('after set set get')
                             if (err) return cb(err)
 
