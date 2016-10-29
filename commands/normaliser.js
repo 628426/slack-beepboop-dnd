@@ -33,7 +33,11 @@ var getOtherForms = function (s) {
     let n = toNormalForm(s)
     for (var synset in synonyms) {
         if (synonyms[synset][0] == n) {
-            otherForms.push(synonyms[synset].slice(1))
+            let pof = synonyms[synset].slice(1)
+            for(var ofi in pof) {
+                otherForms.push(pof[ofi])
+
+            }
             break;
         }
     }
