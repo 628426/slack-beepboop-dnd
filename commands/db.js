@@ -1,5 +1,5 @@
 'use strict'
-const n = require('./normalise.js')
+const n = require('./normaliser.js')
 module.exports = function (store) {
     let db = {}
     db.getPlayer = function (name, cb) {

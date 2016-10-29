@@ -10,7 +10,7 @@ module.exports = function (keyword, msg, text, say) {
                 let output = player
                 if(args.length > 1) {
                     for(var a in args) {
-                        let an = require('./normalise.js').toNormalForm(args[a])
+                        let an = require('./normaliser.js').toNormalForm(args[a])
                         output = output[an]
                     }
                 }
