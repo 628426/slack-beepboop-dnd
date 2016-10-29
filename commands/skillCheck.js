@@ -39,9 +39,9 @@ module.exports = function (s, a) {
                 let flavour = ``
                 var roll = new r().roll(rs)
                 if (text) {
-                    flavour = `(_${flavour}_) `
+                    flavour = `(_${text}_) `
                 }
-                return say(`@${msg.body["user_name"]} rolled _${rs}_ for a ${skill} check ${flavour}and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)}) ${profWarn}`)
+                return say(`@${user} rolled _${rs}_ for a ${skill} check ${flavour}and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)}) ${profWarn}`)
             }
         })
     }
