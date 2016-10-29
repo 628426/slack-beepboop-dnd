@@ -42,22 +42,22 @@ module.exports = function (store) {
                     if (!loadedPlayer.commands) {
                         loadedPlayer.commands = []
                     }
-                    player.commands.push({
+                    loadedPlayer.commands.push({
                         user: user,
                         operation: operation,
                         args: args,
                         on: date
                     })
 
-                    store.set(key, JSON.stringify(player), function (err) {
+                    store.set(key, JSON.stringify(loadedPlayer), function (err) {
 
                         if (err) return cb(err)
 
-                        getPlayer(name, function (err, player) {
+                        getPlayer(name, function (err, Innerplayer) {
                             console.log('after set set get')
                             if (err) return cb(err)
 
-                            cb(null, player)
+                            cb(null, Innerplayer)
                         })
                     })
                 } catch (ee) {
