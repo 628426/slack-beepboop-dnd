@@ -12,10 +12,12 @@ var synonyms = [
 ]
 
 var toNormalForm = function (s) {
-    for (var synset in synonyms) {
-        for (var syn in synonyms[synset]) {
-            if (synonyms[synset][syn] == s.toLowerCase()) {
-                return synonyms[synset][0]
+    if(s) {
+        for (var synset in synonyms) {
+            for (var syn in synonyms[synset]) {
+                if (synonyms[synset][syn] == s.toLowerCase()) {
+                    return synonyms[synset][0]
+                }
             }
         }
     }
