@@ -14,7 +14,7 @@ module.exports = function (a) {
 
         db.getPlayer(msg.body["user_name"], function (err, player) {
             if (!player) {
-                return say(`:sob: Sorry, I couldn't find your player.  Have your dm use /setplayer ${msg.body["user_name"]} ${attribute} value `)
+                return say(`:sob: Sorry, I couldn't find your player ${msg.body["user_name"]}.  Have your dm use /setplayer ${msg.body["user_name"]} ${attribute} value `)
             } else if (!player[attribute]) {
                 return say(`:sob: Sorry, I couldn't find your player's ${attribute}.  Have your dm use /setplayer ${msg.body["user_name"]} ${attribute} value `)
             } else {
