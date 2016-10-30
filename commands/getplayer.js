@@ -9,7 +9,7 @@ module.exports = function (msg, args, say) {
                 let output = player
                 if (args.length > 1) {
                     let properties = args.slice(1)
-                    properties.forEach(function(a) {
+                    properties.forEach(function (a) {
                         let an = require('./normaliser.js').toNormalForm(a).toLowerCase()
                         output = output[an]
                     })

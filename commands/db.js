@@ -93,46 +93,46 @@ function applyToObject(o, op, args) {
         let v = null;
         if (o && o.name && o.name == args[0]) {
             v = o.values
-        } else if (o[args[0]]) {
-            v = o[args[0]]
+        } else if (o[args[0].toLowerCase()]) {
+            v = o[args[0].toLowerCase()]
         }
         if (v) {
             // handle "upgrades"
             if (!isObject(v)) {
                 if (typeof v === 'string' || v instanceof String) {
-                    o[args[0]] = {
+                    o[args[0].toLowerCase()] = {
                         name: v,
                         values: null
                     }
                 }
                 if (typeof v === 'boolean' || v instanceof Boolean) {
-                    o[args[0]] = {
+                    o[args[0].toLowerCase()] = {
                         flag: v,
                         values: null
                     }
                 }
                 if (typeof v === 'number' || v instanceof Number) {
-                    o[args[0]] = {
+                    o[args[0].toLowerCase()] = {
                         index: v,
                         values: null
                     }
                 }
-                if (o[args[0]]) {
+                if (o[args[0].toLowerCase()]) {
                     //                    o = o[args[0]].values
                     //                  args = args.slice(1)
                 }
             }
         } else {
-            o[args[0]] = {}
+            o[args[0].toLowerCase()] = {}
         }
 
     }
     if (args.length == 2) { // needs a value not object
         let v = null;
-        if (o && o.name && o.name == args[0]) {
+        if (o && o.name && o.name == args[0].toLowerCase()) {
             v = o.values
-        } else if (o && o[args[0]]) {
-            v = o[args[0]]
+        } else if (o && o[args[0].toLowerCase()]) {
+            v = o[args[0].toLowerCase()]
         } else {
         }
 
@@ -143,10 +143,10 @@ function applyToObject(o, op, args) {
                 // same type, check operation..
                 if (op == "set") {
                     // overwrite
-                    if (o && o.name && o.name == args[0]) {
+                    if (o && o.name && o.name == args[0].toLowerCase()) {
                         o.values = args[1]
-                    } else if (o && o[args[0]]) {
-                        o[args[0]] = args[1]
+                    } else if (o && o[args[0].toLowerCase()]) {
+                        o[args[0].toLowerCase()] = args[1]
                     }
 
 
@@ -158,11 +158,11 @@ function applyToObject(o, op, args) {
                         o.values.push(vv)
                         o.values.push(args[1])
                         return
-                    } else if (o && o[args[0]]) {
-                        let vv = o[args[0]]
-                        o[args[0]] = []
-                        o[args[0]].push(vv)
-                        o[args[0]].push(args[1])
+                    } else if (o && o[args[0].toLowerCase()]) {
+                        let vv = o[args[0].toLowerCase()]
+                        o[args[0].toLowerCase()] = []
+                        o[args[0].toLowerCase()].push(vv)
+                        o[args[0].toLowerCase()].push(args[1])
                         return
 
                     }
@@ -176,17 +176,17 @@ function applyToObject(o, op, args) {
                 }
             }
         } else {
-            if (o && o.name && o.name == args[0]) {
+            if (o && o.name && o.name == args[0].toLowerCase()) {
                 o.values = args[1]
             } else {
-                o[args[0]] = args[1]
+                o[args[0].toLowerCase()] = args[1]
             }
 
 
             return;
         }
     } else {
-        applyToObject(o[args[0]], op, args.slice(1))
+        applyToObject(o[args[0].toLowerCase()], op, args.slice(1))
 
     }
 
