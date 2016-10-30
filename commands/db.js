@@ -88,7 +88,9 @@ function applyToObject(o, op, args) {
     if (!o) {
         o = {}
     }
-
+    if(args[0] == "") {
+        return;
+    }
     if (args.length > 2) { // nested
         let v = null;
         if (o && o.name && o.name == args[0]) {
