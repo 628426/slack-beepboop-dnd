@@ -7,7 +7,7 @@ function handleCommandAndKeyword(slapp, command, keyword, description, example, 
     let firstWireupForCommand = false
     if (!commands[command]) {
         commands[command] = {}
-
+        firstWireupForCommand = true
     }
     let c = {
         command: command,
