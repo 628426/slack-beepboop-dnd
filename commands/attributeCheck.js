@@ -6,7 +6,6 @@ module.exports = function (attribute) {
 
     var innerFunc = function (msg, params, say) {
 
-
         let user = msg.body["user_name"].toString().trim()
 
         let db = require('./db')(require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }))
@@ -20,15 +19,15 @@ module.exports = function (attribute) {
             } else if (!player[attribute]) {
                 return say(`:sob: Sorry, I couldn't find your player's ${attribute}.  Have your dm use /setplayer ${user} ${attribute} value `)
             } else {
-                if (text && text.toLowerCase() == 'passive') {
+                if (params.length > 1 && params[1].toLowerCase() == 'passive') {
                     return say(`@${user}'s passive ${attribute} is ${(10 + (player[attribute] - 10) / 2).toString()} (10 natural + ${attribute} modifier)`)
                 } else {
                     var rs = `d20+${Math.floor((player[attribute] - 10) / 2)}`
                     console.log(`rolling ${rs}`)
                     let flavour = ``
                     var roll = new r().roll(rs)
-                    if (text) {
-                        flavour = `(_${text}_) `
+                    if (params.length > 1) {
+                        flavour = `(_${params.slice(1).join(' ')}_) `
                     }
                     return say(`@${user} rolled _${rs}_ for a ${attribute} check ${flavour}and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`)
                 }

@@ -57,7 +57,7 @@ function handleCommandAndKeyword(slapp, command, keyword, description, example, 
             if (!handler.cmd) {
                 let choices = `:sob: Sorry couldn't tell what you meant.  Did you mean one of?\r\n`
                 for (var p in handler) {
-                    choices += `*/${command} ${handler[p].keyword}* ${handler[p].description} e.g. _/${command} ${handler.keyword} ${handler[p].example}_\r\n`
+                    choices += `*/${command} ${handler[p].keyword}* ${handler[p].description} e.g. _${handler[p].example}_\r\n`
                 }
                 return say(choices)
             }
