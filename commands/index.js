@@ -41,18 +41,18 @@ function handleCommandAndKeyword(slapp, command, keyword, description, example, 
             }
 
             let handler = null
-            if (!commands || !commands[keyword]) {
-                return say(`:sob: Couldn't find the handler for ${keyword}`)
+            if (!commands || !commands[command]) {
+                return say(`:sob: Couldn't find the handler for ${command}`)
             }
-            if (commands[keyword][args[0]]) {
-                handler = commands[keyword][args[0]]
+            if (commands[command][args[0]]) {
+                handler = commands[command][args[0]]
             } else {
-                handler = commands[keyword]
+                handler = commands[command]
             }
             if (!handler.cmd) {
                 let choices = `:sob: Sorry couldn't tell what you meant.  Did you mean one of?\r\n`
                 for (var p in handler) {
-                    choices += `*/${keyword} ${handler[p].keyword}* ${handler[p].description} e.g. _/${keyword} ${handler.keyword} ${handler[p].example}_\r\n`
+                    choices += `*/${command} ${handler[p].keyword}* ${handler[p].description} e.g. _/${command} ${handler.keyword} ${handler[p].example}_\r\n`
                 }
                 return say(choices)
             }
