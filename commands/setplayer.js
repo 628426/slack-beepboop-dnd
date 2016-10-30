@@ -7,7 +7,7 @@ module.exports = function (msg, args, say) {
     let operation = "set"
     if(args && args.length > 1 && args[1] == "add") {
         operation = "add"
-        args = args.splice(1)
+        args = args.splice(1, 1)
     }
 
     v.requiresParameters(msg, args.join(' '), 'a players name, like, fug.  E.g. /set player fug hp 99', 1, say, function () {
