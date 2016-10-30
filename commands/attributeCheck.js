@@ -15,9 +15,9 @@ module.exports = function (attribute) {
             console.log(`PAYERBACK::${player}`)
             if (!player) {
                 console.log(JSON.stringify(msg.body))
-                return say(`:sob: Sorry, I couldn't find your player [${user}].  Have your dm use /setplayer ${user} ${attribute} value `)
+                return say(`:sob: Sorry, I couldn't find your player [${user}].  Have your dm use /set player ${user} ${attribute} value `)
             } else if (!player[attribute]) {
-                return say(`:sob: Sorry, I couldn't find your player's ${attribute}.  Have your dm use /setplayer ${user} ${attribute} value `)
+                return say(`:sob: Sorry, I couldn't find your player's ${attribute}.  Have your dm use /set player ${user} ${attribute} value `)
             } else {
                 if (params.length > 1 && params[1].toLowerCase() == 'passive') {
                     return say(`@${user}'s passive ${attribute} is ${(10 + (player[attribute] - 10) / 2).toString()} (10 natural + ${attribute} modifier)`)

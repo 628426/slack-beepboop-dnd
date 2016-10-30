@@ -205,7 +205,7 @@ module.exports = (slapp) => {
 
     //    wireupCommand(slapp, 'roll', 'Rolls the specified di(c)e e.g. /roll d20', require('./roll'))
     // wireupCommand(slapp, 'getplayer', 'Get the specified player i.e. /getplayer fug ', require('./getplayer'))
-    // wireupCommand(slapp, 'setplayer', 'Sets attributes of the specified player i.e. /setplayer fug hp 99', require('./setplayer'))
+    // wireupCommand(slapp, 'setplayer', 'Sets attributes of the specified player i.e. /set player fug hp 99', require('./set player'))
     // wireupCommand(slapp, 'setdm', 'Sets the specified player as dungeon master i.e. /setdm tony', require('./setDm'))
 
     // wireupCommand(slapp, 'getdm', 'Returnns the current dm i.e. /getdm ', require('./getDm'))

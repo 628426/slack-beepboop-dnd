@@ -14,9 +14,9 @@ module.exports = function (skill, attribute) {
         db.getPlayer(user, function (err, player) {
             if(err) return say(':sob: Sorry, error occurred ' + err)
             if (!player) {
-                return say(`:sob: Sorry, I couldn't find your player [${user}].  Have your dm use /setplayer ${msg.body["user_name"]} ${attribute} value `)
+                return say(`:sob: Sorry, I couldn't find your player [${user}].  Have your dm use /set player ${msg.body["user_name"]} ${attribute} value `)
             } else if (!player[attribute]) {
-                return say(`:sob: Sorry, I couldn't find your player's ${attribute}.  Have your dm use /setplayer ${msg.body["user_name"]} ${attribute} value `)
+                return say(`:sob: Sorry, I couldn't find your player's ${attribute}.  Have your dm use /set player ${msg.body["user_name"]} ${attribute} value `)
             } else {
                 // check for proficiencies:
                 let isProficient = false
@@ -29,7 +29,7 @@ module.exports = function (skill, attribute) {
                         isProficient = true
                     }
                 } else {
-                    profWarn = `(WARNING: Couldn't find any proficiencies for ${user}, have your d use /setplayer ${user} proficiencies stealth`
+                    profWarn = `(WARNING: Couldn't find any proficiencies for ${user}, have your d use /set player ${user} proficiencies stealth`
                 }
 
                 let rs = `d20+${Math.floor((player[attribute] - 10) / 2)}`
@@ -39,8 +39,8 @@ module.exports = function (skill, attribute) {
                 console.log(`rolling ${rs}`)
                 let flavour = ``
                 var roll = new r().roll(rs)
-                if (params && params.length > 0) {
-                    flavour = `(_${params.join(' ')}_) `
+                if (params && params.length > 1) {
+                    flavour = `(_${params.slice(1).join(' ')}_) `
                 }
                 return say(`@${user} rolled _${rs}_ for a ${skill} check ${flavour}and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)}) ${profWarn}`)
             }
