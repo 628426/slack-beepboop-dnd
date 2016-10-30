@@ -9,7 +9,9 @@ var synonyms = [
     ['performance','perform'],
     ['persuasion','persuade'],
     ['investigation','investigate'],
-    ['proficiencies', 'prof', 'proficencies']
+    ['proficiencies', 'prof', 'proficencies'],
+    ['hitpoints', 'hp'],
+    ['experience','exp','xp']
 ]
 
 var toNormalForm = function (s) { 
