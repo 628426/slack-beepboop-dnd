@@ -54,7 +54,7 @@ function handleCommandAndKeyword(slapp, command, keyword, description, example, 
             } else {
                 handler = commands[command]
             }
-            if (!handler.cmd || args[0].toLowerCase() == "help") {
+            if (!handler.cmd || (args && args.length > 0 && args[0].toLowerCase() == "help")) {
                 let choices = `:sob: Sorry, I couldn't tell what you meant.  Did you mean one of?\r\n`
                 for (var p in handler) {
                     choices += `*/${command} ${handler[p].keyword}* ${handler[p].description} e.g. _${handler[p].example}_\r\n`
