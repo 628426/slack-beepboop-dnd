@@ -168,7 +168,7 @@ function applyToObject(o, op, args) {
         if (v) {
             // handle upgrades
             if (typeof v == typeof args[1]) {
-                console.log(`upgrading`)
+                
                 // same type, check operation..
                 if (op == "set") {
                     // overwrite
@@ -177,7 +177,6 @@ function applyToObject(o, op, args) {
                     } else if (o && o[args[0].toLowerCase()]) {
                         o[args[0].toLowerCase()] = args[1]
                     }
-
 
                     return;
                 } else if (op == "add") {
