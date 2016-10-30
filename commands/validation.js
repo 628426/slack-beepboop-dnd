@@ -41,7 +41,7 @@ module.exports.requiresParameters = function (msg, text, message, num, say, cb) 
     } else {
         tokens = []
     }
-    let validationMessage = ":sob: Sorry I couldn't understand you,"
+    let validationMessage = ":sob: Sorry, I couldn't understand you,"
     if (num && num > 1) {
         valid = false
         validationMessage += num.toString() + ' required parameters are missing.'
