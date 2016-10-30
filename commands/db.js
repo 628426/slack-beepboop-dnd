@@ -56,9 +56,9 @@ module.exports = function (store) {
                         })[0].on
                     }
                     // check cache for newer version...
-                    if (this.cachedPlayers && this.cachedPlayers[key] && loadedPlayer.ts) {
-                        if (this.cachedPlayers[key].ts > loadedPlayer.ts) {
-                            loadedPlayer = this.cachedPlayers[key]
+                    if (me.cachedPlayers && me.cachedPlayers[key] && loadedPlayer.ts) {
+                        if (me.cachedPlayers[key].ts > loadedPlayer.ts) {
+                            loadedPlayer = me.cachedPlayers[key]
                         }
                     }
 

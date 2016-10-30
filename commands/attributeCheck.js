@@ -12,9 +12,8 @@ module.exports = function (attribute) {
 
         db.getPlayer(user, function (err, player) {
             if(err) return say(':sob: Sorry, error occurred ' + err)
-            console.log(`PAYERBACK::${player}`)
+            
             if (!player) {
-                console.log(JSON.stringify(msg.body))
                 return say(`:sob: Sorry, I couldn't find your player [${user}].  Have your dm use /set player ${user} ${attribute} value `)
             } else if (!player[attribute]) {
                 return say(`:sob: Sorry, I couldn't find your player's ${attribute}.  Have your dm use /set player ${user} ${attribute} value `)
@@ -23,7 +22,7 @@ module.exports = function (attribute) {
                     return say(`@${user}'s passive ${attribute} is ${(10 + (player[attribute] - 10) / 2).toString()} (10 natural + ${attribute} modifier)`)
                 } else {
                     var rs = `d20+${Math.floor((player[attribute] - 10) / 2)}`
-                    console.log(`rolling ${rs}`)
+                    
                     let flavour = ``
                     var roll = new r().roll(rs)
                     if (params.length > 1) {

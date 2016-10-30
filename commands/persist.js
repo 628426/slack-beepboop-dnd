@@ -1,8 +1,8 @@
 function checkOrCreateChannel(slack, token, requestedChannel, cb) {
     slack.channels.info({ token: token, channel: requestedChannel }, function (err, channel) {
-        console.log(`slack.channels.info.${requestedChannel}[${err}]`)
+
         if (err && err == 'Error: channel_not_found') {
-            console.log('creating channel:' + requestedChannel)
+
             slack.channels.create({ token: token, name: requestedChannel }, function (errr, channel) {
                 if (errr && errr != 'Error: name_taken') return cb('channels.create::' + errr)
                 return cb()
@@ -41,7 +41,7 @@ function getData(slack, token, schema, channel, key, cb) {
 
 function setData(slack, token, schema, channel, key, value, cb) {
     slack.files.upload({ token: token, content: JSON.stringify(value, null, 4), filetype: 'json', filename: schema + '.' + key + '.json', channels: channel }, function (err, file) {
-        console.log(`slack.files.upload.${JSON.stringify(file)}`)
+
         if (err) return cb('files.upload::' + err)
         value.updated = file.updated
         return cb(null, value)
