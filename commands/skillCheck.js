@@ -4,16 +4,15 @@ const r = require('./roll/index.js')
 
 
 
-module.exports = function (s, a) {
+module.exports = function (skill, attribute) {
 
-    var innerFunc = function (keyword, msg, text, say) {
+    var innerFunc = function (msg, params, say) {
 
-        let skill = n.toNormalForm(s)
-        let attribute = n.toNormalForm(a)
         let user = msg.body["user_name"].toString().trim()
         let db = require('./db')(require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }))
 
         db.getPlayer(user, function (err, player) {
+            if(err) return say(':sob: Sorry, error occurred ' + err)
             if (!player) {
                 return say(`:sob: Sorry, I couldn't find your player [${user}].  Have your dm use /setplayer ${msg.body["user_name"]} ${attribute} value `)
             } else if (!player[attribute]) {
@@ -40,8 +39,8 @@ module.exports = function (s, a) {
                 console.log(`rolling ${rs}`)
                 let flavour = ``
                 var roll = new r().roll(rs)
-                if (text) {
-                    flavour = `(_${text}_) `
+                if (params && params.length > 0) {
+                    flavour = `(_${params.join(' ')}_) `
                 }
                 return say(`@${user} rolled _${rs}_ for a ${skill} check ${flavour}and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)}) ${profWarn}`)
             }

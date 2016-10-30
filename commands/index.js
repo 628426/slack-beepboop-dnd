@@ -1,49 +1,78 @@
 'use strict'
 const os = require('os')
 const n = require('./normaliser.js')
-var commands = []
-function wireupCommand(slapp, keyword, description, cmd) {
-    commands.push({ command: keyword, description: description })
-    slapp.command('/' + keyword, /.*/, (msg, text) => {
-        let say = function (text) {
+var commands = {}
+
+function handleCommandAndKeyword(slapp, command, keyword, description, example, cmd) {
+    let firstWireupForCommand = false
+    if (!commands[command]) {
+        commands[command] = {}
+
+    }
+    let c = {
+        command: command,
+        keyword: keyword,
+        description: description,
+        example: example,
+        cmd: cmd
+    }
+    if (!keyword) {
+        commands[command] = c
+    } else {
+        commands[command][keyword] = c
+    }
+
+    if (firstWireupForCommand) {
+        slapp.command('/' + keyword, /.*/, (msg, text) => {
+
+            let say = function (text) {
+                try {
+                    msg.say(text)
+                }
+                catch (es) {
+                    msg.say(':sob: Exception::' + es.toString() + os.EOL + es.stack)
+                }
+            }
+
+            let args = []
+            if (text) {
+                args = text.split(' ')
+            }
+
+            let handler = null
+            if (!commands || !commands[keyword]) {
+                return say(`:sob: Couldn't find the handler for ${keyword}`)
+            }
+            if (commands[keyword][args[0]]) {
+                handler = commands[keyword][args[0]]
+            } else {
+                handler = commands[keyword]
+            }
+            if (!handler.cmd) {
+                let choices = `:sob: Sorry couldn't tell what you meant.  Did you mean one of?\r\n`
+                for (var p in handler) {
+                    choices += `*/${keyword} ${handler[p].keyword}* ${handler[p].description} e.g. _/${keyword} ${handler.keyword} ${handler[p].example}_\r\n`
+                }
+                return say(choices)
+            }
+
+            let params = []
+            if (args.length > 1) {
+                params = args.slice(1)
+            }
+
             try {
-                msg.say(text)
+                cmd(msg, params, say);
             }
-            catch (es) {
-                msg.say(':sob: Exception::' + es.toString() + os.EOL + es.stack)
+            catch (e) {
+                say(':sob: Exception::' + e.toString() + os.EOL + e.stack)
             }
-        }
-        try {
-            cmd(keyword, msg, text, say);
-        }
-        catch (e) {
-            say(':sob: Exception::' + e.toString() + os.EOL + e.stack)
-        }
-    })
-
-    slapp.message(keyword, ['direct_mention', 'direct_message', 'mention'], (msg, text) => {
-        let say = function (t) {
-            try {
-                msg.respond(t)
-            }
-            catch (es) {
-                msg.say(':sob: Exception::' + es.toString() + os.EOL + es.stack)
-            }
-        }
-        try {
-            cmd(keyword, msg, text, say)
-
-        }
-        catch (e) {
-            say(':sob: Exception::' + e.toString() + os.EOL + e.stack)
-        }
-
-    })
-
-
+        })
+    }
 }
 
-var dndhelp = function (keyword, msg, text, say) {
+
+var dndhelp = function (msg, text, say) {
     var r = '';
     var sortedCommands = commands.sort(function (a, b) {
         if (a.command > b.command) {
@@ -64,17 +93,19 @@ var dndhelp = function (keyword, msg, text, say) {
 // list out explicitly to control order
 module.exports = (slapp) => {
 
-    let names = ['intelligence', 'wisdom', 'charisma', 'dexterity', 'strength', 'constitution']
+    let attributes = ['intelligence', 'wisdom', 'charisma', 'dexterity', 'strength', 'constitution']
 
-    for (var c in names) {
-        wireupCommand(slapp, names[c], `Rolls for ${names[c]}, this is the same as /roll d20 + your characters ${names[c]} bonus`, require('./attributeCheck')(names[c]))
-    }
-
-    let abbreviations = ['int', 'wis', 'cha', 'dex', 'str', 'con']
-
-    for (var a in abbreviations) {
-        let c = abbreviations[a]
-        wireupCommand(slapp, c, `A shorthand alias for /${c}`, require('./attributeCheck')(c))
+    for (var a in attributes) {
+        let attributeVariations = n.getAllForms(attributes[a])
+        for (var v in attributeVariations) {
+            let attribute = attributeVariations[v]
+            handleCommandAndKeyword(slapp,
+                'check',
+                attribute,
+                `Makes a ${attributes[a]} check`,
+                `/check ${attribute}`,
+                require('./attributeCheck')(attributes[a]))
+        }
     }
 
     let skills = [{
@@ -131,23 +162,49 @@ module.exports = (slapp) => {
     }
     ]
 
-
-    for(var s in skills) {
+    for (var s in skills) {
         let sname = skills[s].name
         let aname = skills[s].attribute
         let allforms = n.getAllForms(sname)
-        for(var on in allforms) {
-            wireupCommand(slapp, allforms[on], `Makes a ${n.toNormalForm(allforms[on])} check /${allforms[on]} (optional: flavour text e.g. /disguise dress up like Guy Pearce)`, require('./skillCheck')(allforms[on], aname))
+        for (var on in allforms) {
+
+            handleCommandAndKeyword(slapp,
+                'check',
+                allforms[on], // intimidate OR intimidation 
+                `Makes a ${sname} check`,
+                `/check ${allforms[on]}`,
+                require('./skillCheck')(sname, n.toNormalForm(aname))
+            )
         }
     }
 
-    wireupCommand(slapp, 'roll', 'Rolls the specified di(c)e e.g. /roll d20', require('./roll'))
-    wireupCommand(slapp, 'getplayer', 'Get the specified player i.e. /getplayer fug ', require('./getplayer'))
-    wireupCommand(slapp, 'setplayer', 'Sets attributes of the specified player i.e. /setplayer fug hp 99', require('./setplayer'))
-    wireupCommand(slapp, 'setdm', 'Sets the specified player as dungeon master i.e. /setdm tony', require('./setDm'))
+    handleCommandAndKeyword(slapp,
+        'roll',
+        null,
+        `Rolls the specified dice`,
+        `/roll d20`,
+        require('./roll')
+    )
 
-    wireupCommand(slapp, 'getdm', 'Returnns the current dm i.e. /getdm ', require('./getDm'))
+    console.log(JSON.stringify(commands), null, 2)
 
-    wireupCommand(slapp, 'dndhelp', 'Lists available commands e.g. /dndhelp', dndhelp)
+    var msg = {
+    }
+    msg["body"] = {}
+    msg.body["user_name"] = "tester"
+    var say = function(text) {
+
+    }
+
+    commands['roll'].cmd(msg, ['d20'], say)
+
+    //    wireupCommand(slapp, 'roll', 'Rolls the specified di(c)e e.g. /roll d20', require('./roll'))
+    // wireupCommand(slapp, 'getplayer', 'Get the specified player i.e. /getplayer fug ', require('./getplayer'))
+    // wireupCommand(slapp, 'setplayer', 'Sets attributes of the specified player i.e. /setplayer fug hp 99', require('./setplayer'))
+    // wireupCommand(slapp, 'setdm', 'Sets the specified player as dungeon master i.e. /setdm tony', require('./setDm'))
+
+    // wireupCommand(slapp, 'getdm', 'Returnns the current dm i.e. /getdm ', require('./getDm'))
+
+    // wireupCommand(slapp, 'dndhelp', 'Lists available commands e.g. /dndhelp', dndhelp)
 
 }

@@ -6,7 +6,7 @@ const BeepBoopContext = require('slapp-context-beepboop')
 
 console.log('SLACK_VERIFY_TOKEN::' + process.env.SLACK_VERIFY_TOKEN)
 
-if (!process.env.PORT) throw Error('PORT missing but required')
+//if (!process.env.PORT) throw Error('PORT missing but required')
 
 var slapp = Slapp({
   record: 'out.jsonl',
