@@ -2,13 +2,24 @@
 const n = require('./normaliser.js')
 module.exports = function (store) {
     let db = {}
+    db.cachedPlayers = {}
     db.getPlayer = function (name, cb) {
         let key = "PLAYER_" + name;
         console.log('before get')
         store.get(key, function (err, player) {
             if (err) return cb(err)
-            console.log(`getPlayer.get::Got ${player} for ${key}`)
             let playerWithCommands = JSON.parse(player)
+            if (playerWithCommands.commands && playerWithCommands.commands.length > 0) {
+                playerWithCommands.ts = playerWithCommands.commands.sort(function (a, b) {
+                    return b.on > a.on
+                })[0].on
+            }
+            // check cache for newer version...
+            if (this.cachedPlayers && this.cachedPlayers[key] && playerWithCommands.ts) {
+                if (this.cachedPlayers[key].ts > playerWithCommands.ts) {
+                    playerWithCommands = this.cachedPlayers[key]
+                }
+            }
             let playerToReturn = {}
             playerToReturn.name = playerWithCommands.name
             if (playerWithCommands && playerWithCommands.commands && playerWithCommands.commands.length) {
@@ -37,6 +48,18 @@ module.exports = function (store) {
                     if (!loadedPlayer.commands) {
                         loadedPlayer.commands = []
                     }
+                    if (loadedPlayer.commands && loadedPlayer.commands.length > 0) {
+                        loadedPlayer.ts = loadedPlayer.commands.sort(function (a, b) {
+                            return b.on > a.on
+                        })[0].on
+                    }
+                    // check cache for newer version...
+                    if (this.cachedPlayers && this.cachedPlayers[key] && loadedPlayer.ts) {
+                        if (this.cachedPlayers[key].ts > loadedPlayer.ts) {
+                            loadedPlayer = this.cachedPlayers[key]
+                        }
+                    }
+
                     let normalisedArgs = args
                     for (var i = 0; i < normalisedArgs.length; i++) {
                         normalisedArgs[i] = n.toNormalForm(normalisedArgs[i])
@@ -44,14 +67,15 @@ module.exports = function (store) {
                     loadedPlayer.commands.push({
                         user: user,
                         operation: operation,
-                        args: args,
+                        args: normalisedArgs,
                         on: date
                     })
 
                     store.set(key, JSON.stringify(loadedPlayer), function (err) {
 
-                        if (err) return cb(err)
-
+                        if (err) return cb(err)     
+                        this.cachedPlayers[key] = loadedPlayer
+                         
                         me.getPlayer(name, function (err, Innerplayer) {
                             console.log('after set set get')
                             if (err) return cb(err)
@@ -88,7 +112,7 @@ function applyToObject(o, op, args) {
     if (!o) {
         o = {}
     }
-    if(args[0] == "") {
+    if (args[0] == "") {
         return;
     }
     if (args.length > 2) { // nested
