@@ -23,7 +23,8 @@ function handleCommandAndKeyword(slapp, command, keyword, description, example, 
     }
 
     if (firstWireupForCommand) {
-        slapp.command('/' + keyword, /.*/, (msg, text) => {
+        
+        slapp.command('/' + command, /.*/, (msg, text) => {
 
             let say = function (text) {
                 try {
