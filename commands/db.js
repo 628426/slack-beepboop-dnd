@@ -179,7 +179,7 @@ function applyToObject(o, op, args) {
                     }
 
                     return;
-                } else if (op == "add") {
+                } else if (op == "push") {
                     if (o && o.name && o.name == args[0]) {
                         let vv = o.values
                         o.values = []
@@ -192,7 +192,6 @@ function applyToObject(o, op, args) {
                         o[args[0].toLowerCase()].push(vv)
                         o[args[0].toLowerCase()].push(args[1])
                         return
-
                     }
 
                     v += ',' + args[0]

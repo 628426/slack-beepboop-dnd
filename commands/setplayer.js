@@ -5,8 +5,8 @@ module.exports = function (msg, args, say) {
     let db = require('./db')(require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }))
 
     let operation = "set"
-    if(args && args.length > 1 && args[1] == "add") {
-        operation = "add"
+    if(args && args.length > 1 && args[1] == "push") {
+        operation = "push"
         args.splice(1, 1)
     }
 
