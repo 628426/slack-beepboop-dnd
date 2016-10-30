@@ -135,6 +135,10 @@ module.exports = (slapp) => {
         name: 'history',
         attribute: 'int'
     }, {
+        name: 'insight',
+        attribute: 'int'
+    },
+    {
         name: 'intimidation',
         attribute: 'cha'
     }, {
