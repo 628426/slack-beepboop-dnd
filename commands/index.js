@@ -195,9 +195,18 @@ module.exports = (slapp) => {
         'get',
         'player',
         `Gets the specified attribute of the player`,
-        `/get player hp`,
+        `/get player ada hp`,
         require('./getplayer.js')
     )
+
+   handleCommandAndKeyword(slapp,
+        'set',
+        'player',
+        `Set the specified attribute of the player to the specified value`,
+        `/set player fug hp 99`,
+        require('./setplayer.js')
+    )
+
 
     handleCommandAndKeyword(slapp,
         'get',
