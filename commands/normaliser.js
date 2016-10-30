@@ -5,6 +5,7 @@ var synonyms = [
     ['dexterity', 'dex'],
     ['constitution', 'con'],
     ['wisdom', 'wis'],
+    ['animalhandling', 'animal','handling','animal_handling'],
     ['intimidation','intimidate'],
     ['performance','perform'],
     ['persuasion','persuade'],
