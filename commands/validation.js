@@ -1,4 +1,4 @@
-module.exports.mustBeUser = function (msg, command, user, say, cb) {
+module.exports.mustBeUser = function (msg, user, say, cb) {
     var slapp = msg._slapp;
     slapp.client.users.list({ token: msg.meta.bot_token }, function (err, result) {
         if (err) {
