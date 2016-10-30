@@ -18,6 +18,7 @@ var synonyms = [
 var toNormalForm = function (s) { 
     try {
     if(s) {
+        s = s.toLowerCase()
         for (var synset in synonyms) {
             for (var syn in synonyms[synset]) {
                 if (synonyms[synset][syn] == s.toLowerCase()) {
