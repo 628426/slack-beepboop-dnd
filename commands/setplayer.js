@@ -1,11 +1,10 @@
 const v = require('./validation')
 
-module.exports = function (keyword, msg, text, say) {
-    let args = text.split(' ')
+module.exports = function (msg, args, say) {
 
     let db = require('./db')(require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }))
 
-    v.requiresParameters(msg, text, 'a players name, like, fug.  E.g. /set player fug hp 99', 1, say, function () {
+    v.requiresParameters(msg, args.join(' '), 'a players name, like, fug.  E.g. /set player fug hp 99', 1, say, function () {
         v.mustBeDm(msg, keyword, say, function () {
             v.mustBeUser(msg, keyword, args[0], say, function () {
                 if (args.length == 1) {
@@ -13,8 +12,8 @@ module.exports = function (keyword, msg, text, say) {
                 }
 
                 db.setPlayer(args[0], msg.body["user_name"], "set", args.slice(1), Date.now(), function (err, player) {
-                    if (err) say(`:sob: Sorry, ${err}`)
-                    say(JSON.stringify(player, null, 4))
+                    if (err) return say(`:sob: Sorry, ${err}`)
+                    return say(JSON.stringify(player, null, 4))
                 })
             })
         })
