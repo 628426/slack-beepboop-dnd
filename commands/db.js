@@ -4,6 +4,7 @@ module.exports = function (store) {
     let db = {}
     db.cachedPlayers = {}
     db.getPlayer = function (name, cb) {
+        let me = this;
         let key = "PLAYER_" + name;
         console.log('before get')
         store.get(key, function (err, player) {
@@ -15,9 +16,9 @@ module.exports = function (store) {
                 })[0].on
             }
             // check cache for newer version...
-            if (this.cachedPlayers && this.cachedPlayers[key] && playerWithCommands.ts) {
-                if (this.cachedPlayers[key].ts > playerWithCommands.ts) {
-                    playerWithCommands = this.cachedPlayers[key]
+            if (me.cachedPlayers && me.cachedPlayers[key] && playerWithCommands.ts) {
+                if (me.cachedPlayers[key].ts > playerWithCommands.ts) {
+                    playerWithCommands = me.cachedPlayers[key]
                 }
             }
             let playerToReturn = {}
@@ -48,7 +49,8 @@ module.exports = function (store) {
                     if (!loadedPlayer.commands) {
                         loadedPlayer.commands = []
                     }
-                    if (loadedPlayer.commands && loadedPlayer.commands.length > 0) {
+                    
+                    if (loadedPlayer.commands && loadedPlayer.commands.length > 0 && !loadedPlayer.ts) {
                         loadedPlayer.ts = loadedPlayer.commands.sort(function (a, b) {
                             return b.on > a.on
                         })[0].on
@@ -70,12 +72,13 @@ module.exports = function (store) {
                         args: normalisedArgs,
                         on: date
                     })
+                    loadedPlayer.ts = date
 
                     store.set(key, JSON.stringify(loadedPlayer), function (err) {
 
                         if (err) return cb(err)     
-                        this.cachedPlayers[key] = loadedPlayer
-                         
+                        me.cachedPlayers[key] = loadedPlayer
+
                         me.getPlayer(name, function (err, Innerplayer) {
                             console.log('after set set get')
                             if (err) return cb(err)
