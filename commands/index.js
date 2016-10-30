@@ -39,6 +39,13 @@ function handleCommandAndKeyword(slapp, command, keyword, description, example, 
             if (text) {
                 args = text.split(' ')
             }
+            args = args.map(function (a) {
+                if (a.charAt(0) === "@") {
+                    return a.substring(1)
+                } else {
+                    return a
+                }
+            })
 
             let handler = null
             let params = args
@@ -98,20 +105,21 @@ module.exports = (slapp) => {
         return a > b;
     })
 
-    for (var a in attributes) {
-        let attributeVariations = n.getAllForms(attributes[a]).sort(function (a, b) {
+    attributes.forEach(function (attribute) {
+
+        let attributeVariations = n.getAllForms(attribute).sort(function (a, b) {
             return a > b
-        })
-        for (var v in attributeVariations) {
-            let attribute = attributeVariations[v]
+        }).forEach(function (variation) {
+
             handleCommandAndKeyword(slapp,
                 'check',
-                attribute,
-                `Makes a ${attributes[a]} check`,
-                `/check ${attribute}`,
-                require('./attributeCheck')(attributes[a]))
-        }
-    }
+                variation,
+                `Makes a ${attribute} check`,
+                `/check ${variation}`,
+                require('./attributeCheck')(attribute))
+        })
+
+    })
 
     let skills = [{
         name: 'acrobatics',
@@ -203,7 +211,7 @@ module.exports = (slapp) => {
         require('./getplayer.js')
     )
 
-   handleCommandAndKeyword(slapp,
+    handleCommandAndKeyword(slapp,
         'set',
         'player',
         `Set the specified attribute of the player to the specified value`,
@@ -219,7 +227,7 @@ module.exports = (slapp) => {
         `/get dm`,
         require('./getDm.js')
     )
-    
+
     handleCommandAndKeyword(slapp,
         'set',
         'dm',
