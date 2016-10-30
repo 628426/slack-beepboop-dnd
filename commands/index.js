@@ -191,24 +191,46 @@ module.exports = (slapp) => {
         require('./roll')
     )
 
-    console.log(JSON.stringify(commands), null, 2)
+    handleCommandAndKeyword(slapp,
+        'get',
+        'player',
+        `Gets the specified attribute of the player`,
+        `/get player hp`,
+        require('./getplayer.js')
+    )
+
+    handleCommandAndKeyword(slapp,
+        'get',
+        'dm',
+        `Gets the current dm`,
+        `/get dm`,
+        require('./getDm.js')
+    )
+    
+    handleCommandAndKeyword(slapp,
+        'set',
+        'dm',
+        `Set the dm to the specified player`,
+        `/set dm fug`,
+        require('./setDm.js')
+    )
+
+
+
+
 
     var msg = {
     }
     msg["body"] = {}
     msg.body["user_name"] = "tester"
+
     var say = function (text) {
 
     }
 
     commands['roll'].cmd(msg, ['d20'], say)
 
-    //    wireupCommand(slapp, 'roll', 'Rolls the specified di(c)e e.g. /roll d20', require('./roll'))
-    // wireupCommand(slapp, 'getplayer', 'Get the specified player i.e. /getplayer fug ', require('./getplayer'))
     // wireupCommand(slapp, 'setplayer', 'Sets attributes of the specified player i.e. /set player fug hp 99', require('./set player'))
-    // wireupCommand(slapp, 'setdm', 'Sets the specified player as dungeon master i.e. /setdm tony', require('./setDm'))
-
-    // wireupCommand(slapp, 'getdm', 'Returnns the current dm i.e. /getdm ', require('./getDm'))
 
     // wireupCommand(slapp, 'dndhelp', 'Lists available commands e.g. /dndhelp', dndhelp)
 
