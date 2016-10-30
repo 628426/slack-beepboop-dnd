@@ -1,7 +1,6 @@
 const v = require('./validation')
 const r = require('./roll/index.js')
 module.exports = function (msg, params, say) {
-    console.log(`params::${JSON.stringify(params)}`)
     v.requiresParameters(msg,
         params.join(' ').trim(),
         '2d6 or d20 or 3d6+4.  See https://github.com/troygoode/node-roll for more advanced examples',

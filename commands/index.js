@@ -94,10 +94,14 @@ var dndhelp = function (msg, text, say) {
 // list out explicitly to control order
 module.exports = (slapp) => {
 
-    let attributes = ['intelligence', 'wisdom', 'charisma', 'dexterity', 'strength', 'constitution']
+    let attributes = ['intelligence', 'wisdom', 'charisma', 'dexterity', 'strength', 'constitution'].sort(function (a, b) {
+        return a > b;
+    })
 
     for (var a in attributes) {
-        let attributeVariations = n.getAllForms(attributes[a])
+        let attributeVariations = n.getAllForms(attributes[a]).sort(function (a, b) {
+            return a > b
+        })
         for (var v in attributeVariations) {
             let attribute = attributeVariations[v]
             handleCommandAndKeyword(slapp,
