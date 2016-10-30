@@ -23,7 +23,7 @@ function handleCommandAndKeyword(slapp, command, keyword, description, example, 
     }
 
     if (firstWireupForCommand) {
-        
+
         slapp.command('/' + command, /.*/, (msg, text) => {
 
             let say = function (text) {
@@ -41,11 +41,16 @@ function handleCommandAndKeyword(slapp, command, keyword, description, example, 
             }
 
             let handler = null
+            let params = args
             if (!commands || !commands[command]) {
                 return say(`:sob: Couldn't find the handler for ${command}`)
             }
             if (commands[command][args[0]]) {
                 handler = commands[command][args[0]]
+
+                if (args.length > 1) {
+                    params = args.slice(1)
+                }
             } else {
                 handler = commands[command]
             }
@@ -57,13 +62,8 @@ function handleCommandAndKeyword(slapp, command, keyword, description, example, 
                 return say(choices)
             }
 
-            let params = []
-            if (args.length > 1) {
-                params = args.slice(1)
-            }
-
             try {
-                cmd(msg, params, say);
+                handler.cmd(msg, params, say);
             }
             catch (e) {
                 say(':sob: Exception::' + e.toString() + os.EOL + e.stack)
@@ -193,7 +193,7 @@ module.exports = (slapp) => {
     }
     msg["body"] = {}
     msg.body["user_name"] = "tester"
-    var say = function(text) {
+    var say = function (text) {
 
     }
 
