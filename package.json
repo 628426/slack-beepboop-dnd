@@ -1,12 +1,12 @@
 {
-  "name": "inout",
+  "name": "slack-beepboop-dnd",
   "version": "0.0.1",
-  "description": "Slackbot for tracking who is in and who is out",
+  "description": "Slackbot for managing a d&d 5e game",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Mike Brevoort",
+  "author": "Nathan Rogers",
   "license": "MIT",
   "dependencies": {
     "beepboop-persist": "^0.1.0",

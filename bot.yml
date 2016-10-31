@@ -1,5 +1,5 @@
-name: dnd
-description: A simple bot to support dnd sessions or groups that run in slack 
+name: d&d 5e
+description: A simple bot to support d&d sessions or groups that run in slack 
 email: 628426@gmail.com
 slackscopes:
   - bot
