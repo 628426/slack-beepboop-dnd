@@ -189,6 +189,8 @@ function applyToObject(o, op, args) {
                                 console.log(`Pushing old value into direct array::${value}`)
                                 o.values.push(value)
                             })
+                        } else if(vv) {
+                            o.values.push(vv)
                         }
                         console.log(`Pushing new value into direct array::${args[1]}`)
                         o.values.push(args[1])
@@ -204,8 +206,11 @@ function applyToObject(o, op, args) {
                                 console.log(`Pushing old value into indirect array::${value}`)
                                 o[args[0].toLowerCase()].push(value)
                             })
-                        }   
-                        console.log(`Pushing new value into direct array::${JSON.stringify(args[1])}`)
+                        } else if(vv) {
+                            // vv was something else push it  in
+                            o[args[0].toLowerCase()].push(vv)
+                        }  
+                        console.log(`Pushing new value into indirect array::${JSON.stringify(args[1])}`)
                         o[args[0].toLowerCase()].push(args[1])
                         return
                     }
