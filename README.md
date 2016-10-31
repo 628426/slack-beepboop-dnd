@@ -32,6 +32,15 @@ The bot includes an implementation of ([Troy Goode's roll package](https://npmjs
 You rolled 2d20b1 (advantage roll due to inspiration) and got 14 (dice rolled were [14,2])
 ```
 
+The complete list of supported commands is
+
+```irc
+/set 
+/get
+/roll
+/check
+```
+
 All your data is stored within your slack team as json snippets uploaded to a new #data channel, and the bot source is available here, giving you full continuity for your session
 
 
