@@ -34,7 +34,7 @@ module.exports = function (skill, attribute) {
 
                 let rs = `d20+${Math.floor((player[attribute] - 10) / 2)}`
                 if(isProficient && player.level) {
-                    rs += '+' + Math.floor((player.level / 4)).toString()
+                    rs += '+' + (2 + Math.floor((player.level / 4))).toString()
                 }
                 
                 let flavour = ``
