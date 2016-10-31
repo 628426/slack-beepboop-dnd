@@ -6,7 +6,7 @@ module.exports = function (store) {
     db.getPlayer = function (name, cb) {
         let me = this;
         let key = "PLAYER_" + name;
-        console.log('before get')
+
         store.get(key, function (err, player) {
             if (err) return cb(err)
             let playerWithCommands = JSON.parse(player)
@@ -80,14 +80,14 @@ module.exports = function (store) {
                         me.cachedPlayers[key] = loadedPlayer
 
                         me.getPlayer(name, function (err, Innerplayer) {
-                            console.log('after set set get')
+                            
                             if (err) return cb(err)
 
                             return cb(null, Innerplayer)
                         })
                     })
                 } catch (ee) {
-                    console.log('ee')
+                    
                     return cb(ee.stack)
                 }
 
@@ -182,24 +182,30 @@ function applyToObject(o, op, args) {
                 } else if (op == "push") {
                     if (o && o.name && o.name == args[0]) {
                         let vv = o.values
+                        console.log(`Found direct::${JSON.stringify(o.values)}`)
                         o.values = []
                         if (vv && Array.isArray(vv)) {
                             vv.forEach(function (value) {
+                                console.log(`Pushing old value into direct array::${value}`)
                                 o.values.push(value)
                             })
                         }
-
+                        console.log(`Pushing new value into direct array::${args[1]}`)
                         o.values.push(args[1])
                         return
                     } else if (o && o[args[0].toLowerCase()]) {
+                        
                         let vv = o[args[0].toLowerCase()]
+                        console.log(`Found indirect::${JSON.stringify(vv)}`)
                         o[args[0].toLowerCase()] = []
                         if (vv && Array.isArray(vv)) {
+                            console.log(`Found indirect array::${JSON.stringify(vv)}`)
                             vv.forEach(function (value) {
+                                console.log(`Pushing old value into indirect array::${value}`)
                                 o[args[0].toLowerCase()].push(value)
                             })
-                        }
-
+                        }   
+                        console.log(`Pushing new value into direct array::${JSON.stringify(args[1])}`)
                         o[args[0].toLowerCase()].push(args[1])
                         return
                     }
@@ -207,7 +213,12 @@ function applyToObject(o, op, args) {
                     v += ',' + args[0]
                     let vv = v
                     v = []
-                    v.push(vv)
+                    if (vv) {
+                        vv.split(',').forEach(function (value) {
+                            v.push(value)
+                        })
+                    }
+
                     v.push(args[1])
                     return
                 }

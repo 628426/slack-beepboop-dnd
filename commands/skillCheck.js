@@ -36,7 +36,7 @@ module.exports = function (skill, attribute) {
                 if(isProficient && player.level) {
                     rs += '+' + Math.floor((player.level / 4)).toString()
                 }
-                console.log(`rolling ${rs}`)
+                
                 let flavour = ``
                 var roll = new r().roll(rs)
                 if (params && params.length > 1) {
