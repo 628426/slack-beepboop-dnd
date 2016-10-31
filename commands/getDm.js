@@ -8,7 +8,7 @@ module.exports = function (msg, args, say) {
             return say(`:sob: Sorry, ${err} occurred`)
         }
         if(!output) {
-            return say('There is no dm.  Use /setdm to set the current dm')
+            return say('There is no dm.  Use /set dm to set the current dm')
         }
          else {
              return say(`@${output} is the dm, look out`)
