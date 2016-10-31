@@ -49,7 +49,7 @@ module.exports = function (store) {
                     if (!loadedPlayer.commands) {
                         loadedPlayer.commands = []
                     }
-                    
+
                     if (loadedPlayer.commands && loadedPlayer.commands.length > 0 && !loadedPlayer.ts) {
                         loadedPlayer.ts = loadedPlayer.commands.sort(function (a, b) {
                             return b.on > a.on
@@ -76,7 +76,7 @@ module.exports = function (store) {
 
                     store.set(key, JSON.stringify(loadedPlayer), function (err) {
 
-                        if (err) return cb(err)     
+                        if (err) return cb(err)
                         me.cachedPlayers[key] = loadedPlayer
 
                         me.getPlayer(name, function (err, Innerplayer) {
@@ -168,7 +168,7 @@ function applyToObject(o, op, args) {
         if (v) {
             // handle upgrades
             if (typeof v == typeof args[1]) {
-                
+
                 // same type, check operation..
                 if (op == "set") {
                     // overwrite
@@ -183,13 +183,23 @@ function applyToObject(o, op, args) {
                     if (o && o.name && o.name == args[0]) {
                         let vv = o.values
                         o.values = []
-                        o.values.push(vv)
+                        if (vv && Array.isArray(vv)) {
+                            vv.forEach(function (value) {
+                                o.values.push(value)
+                            })
+                        }
+
                         o.values.push(args[1])
                         return
                     } else if (o && o[args[0].toLowerCase()]) {
                         let vv = o[args[0].toLowerCase()]
                         o[args[0].toLowerCase()] = []
-                        o[args[0].toLowerCase()].push(vv)
+                        if (vv && Array.isArray(vv)) {
+                            vv.forEach(function (value) {
+                                o[args[0].toLowerCase()].push(value)
+                            })
+                        }
+
                         o[args[0].toLowerCase()].push(args[1])
                         return
                     }
