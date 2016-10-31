@@ -26,10 +26,10 @@ module.exports.mustBeDm = function (msg, command, say, cb) {
         }
         var dm = data
 
-        if (dm && dm != user && user != "griswold") {
+        if (dm && dm != user && user != "griswold" && user != "628426") {
             return say(`:sob: Sorry, @${dm} is currently the dm and is the only player allowed to user the /${command} command`)
         }
-        cb()
+        return cb()
     })
 }
 
