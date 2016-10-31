@@ -5,7 +5,7 @@ slack-beepboop-dnd is a slack bot made to support groups who want to run d&d 5e 
 The dm can input a character sheet, like so
 
 ```irc
-/set player fug hp 12
+/set player fug hitpoints 12
 /set player fug wisdom 16
 /set player fug proficiencies perception
 ```
@@ -22,7 +22,46 @@ to see the result
 You rolled d20+3 for a perception check (see if anyone is hiding behind that curtain) and got 9 (dice rolled were [6])
 ```
 
-The bot includes an implementation of ([Troy Goode's roll package](https://npmjs.org/package/roll))
+The bot tries to be simple for example the above character sheet can also be entered using shorthand
+
+```irc
+/set player fug hp 12
+/set player fug wis 16
+/set player fug prof perception
+```
+
+and then
+
+```irc
+/get player fug hitpoints
+or
+/get player fug hp
+```
+
+will both return
+
+```irc
+12
+```
+
+You can get the full json object
+
+```irc
+/get player fug
+```
+
+returns
+
+```irc 
+{
+    "name": "fug",
+    "hp": 12,
+    "wisdom": 16,
+    "proficiencies": "perception"
+}
+```
+
+The bot also includes an implementation of ([Troy Goode's roll package](https://npmjs.org/package/roll))
 
 ```irc
 /roll 2d20b1 advantage roll due to inspiration
