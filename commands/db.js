@@ -80,14 +80,14 @@ module.exports = function (store) {
                         me.cachedPlayers[key] = loadedPlayer
 
                         me.getPlayer(name, function (err, Innerplayer) {
-                            
+
                             if (err) return cb(err)
 
                             return cb(null, Innerplayer)
                         })
                     })
                 } catch (ee) {
-                    
+
                     return cb(ee.stack)
                 }
 
@@ -111,7 +111,11 @@ function isArray(obj) {
 }
 
 function applyToObject(o, op, args) {
-
+    if (args.length > 1) {
+        for (var argnum = 0; argnum < args.length - 1; args++) {
+            args[argnum] = args[argnum].toLowerCase()
+        }
+    }
     if (!o) {
         o = {}
     }
@@ -189,14 +193,14 @@ function applyToObject(o, op, args) {
                                 console.log(`Pushing old value into direct array::${value}`)
                                 o.values.push(value)
                             })
-                        } else if(vv) {
+                        } else if (vv) {
                             o.values.push(vv)
                         }
                         console.log(`Pushing new value into direct array::${args[1]}`)
                         o.values.push(args[1])
                         return
                     } else if (o && o[args[0].toLowerCase()]) {
-                        
+
                         let vv = o[args[0].toLowerCase()]
                         console.log(`Found indirect::${JSON.stringify(vv)}`)
                         o[args[0].toLowerCase()] = []
@@ -206,10 +210,10 @@ function applyToObject(o, op, args) {
                                 console.log(`Pushing old value into indirect array::${value}`)
                                 o[args[0].toLowerCase()].push(value)
                             })
-                        } else if(vv) {
+                        } else if (vv) {
                             // vv was something else push it  in
                             o[args[0].toLowerCase()].push(vv)
-                        }  
+                        }
                         console.log(`Pushing new value into indirect array::${JSON.stringify(args[1])}`)
                         o[args[0].toLowerCase()].push(args[1])
                         return
@@ -227,6 +231,8 @@ function applyToObject(o, op, args) {
                     v.push(args[1])
                     return
                 }
+            } else {
+                
             }
         } else {
             if (o && o.name && o.name == args[0].toLowerCase()) {
@@ -234,8 +240,6 @@ function applyToObject(o, op, args) {
             } else {
                 o[args[0].toLowerCase()] = args[1]
             }
-
-
             return;
         }
     } else {
