@@ -112,7 +112,7 @@ function isArray(obj) {
 
 function applyToObject(o, op, args) {
     if (args.length > 1) {
-        for (var argnum = 0; argnum < args.length - 1; args++) {
+        for (var argnum = 0; argnum < args.length - 1; argnum++) {
             args[argnum] = args[argnum].toLowerCase()
         }
     }
@@ -232,7 +232,7 @@ function applyToObject(o, op, args) {
                     return
                 }
             } else {
-                
+
             }
         } else {
             if (o && o.name && o.name == args[0].toLowerCase()) {
