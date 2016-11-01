@@ -10,19 +10,19 @@ module.exports = function (store) {
         store.get(key, function (err, player) {
             if (err) return cb(err)
             let playerWithCommands = JSON.parse(player)
-            if (playerWithCommands.commands && playerWithCommands.commands.length > 0) {
-                playerWithCommands.ts = playerWithCommands.commands[playerWithCommands.commands.length-1].on
+            if (playerWithCommands.commands && playerWithCommands.commands.length > 0 && !playerWithCommands.ts) {
+                playerWithCommands.ts = playerWithCommands.commands[playerWithCommands.commands.length - 1].on
             }
             // check cache for newer version...
             if (me.cachedPlayers && me.cachedPlayers[key] && playerWithCommands.ts) {
                 if (me.cachedPlayers[key].ts > playerWithCommands.ts) {
-                    console.log('Cache hit')
+                    console.log('G Cache hit')
                     playerWithCommands = me.cachedPlayers[key]
                 } else {
-                    console.log('Cache stale')
+                    console.log('G Cache stale')
                 }
             } else {
-                console.log('Cache miss')
+                console.log('G Cache miss')
             }
             let playerToReturn = {}
             playerToReturn.name = playerWithCommands.name
@@ -54,15 +54,18 @@ module.exports = function (store) {
                     }
 
                     if (loadedPlayer.commands && loadedPlayer.commands.length > 0 && !loadedPlayer.ts) {
-                        loadedPlayer.ts = loadedPlayer.commands.sort(function (a, b) {
-                            return b.on > a.on
-                        })[0].on
+                        loadedPlayer.ts = loadedPlayer.commands[loadedPlayer.commands.length - 1].ts
                     }
                     // check cache for newer version...
                     if (me.cachedPlayers && me.cachedPlayers[key] && loadedPlayer.ts) {
                         if (me.cachedPlayers[key].ts > loadedPlayer.ts) {
+                            console.log('SG Cache hit')
                             loadedPlayer = me.cachedPlayers[key]
+                        } else {
+                            console.log('SG Cache stale')
                         }
+                    } else {
+                        console.log('SG Cache miss')
                     }
 
                     let normalisedArgs = args
@@ -82,7 +85,7 @@ module.exports = function (store) {
                         if (err) return cb(err)
                         me.cachedPlayers[key] = loadedPlayer
                         console.log('Cache back')
-                        
+
                         me.getPlayer(name, function (err, Innerplayer) {
 
                             if (err) return cb(err)
