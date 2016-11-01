@@ -6,6 +6,7 @@ var synonyms = [
     ['constitution', 'con'],
     ['wisdom', 'wis'],
     ['animalhandling', 'animal','handling','animal_handling'],
+    ['sleightofhand', 'sleight','sleight_of_hand'],
     ['intimidation','intimidate'],
     ['performance','perform'],
     ['persuasion','persuade'],

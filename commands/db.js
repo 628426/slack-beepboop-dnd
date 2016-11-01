@@ -11,15 +11,18 @@ module.exports = function (store) {
             if (err) return cb(err)
             let playerWithCommands = JSON.parse(player)
             if (playerWithCommands.commands && playerWithCommands.commands.length > 0) {
-                playerWithCommands.ts = playerWithCommands.commands.sort(function (a, b) {
-                    return b.on > a.on
-                })[0].on
+                playerWithCommands.ts = playerWithCommands.commands[playerWithCommands.commands.length-1].on
             }
             // check cache for newer version...
             if (me.cachedPlayers && me.cachedPlayers[key] && playerWithCommands.ts) {
                 if (me.cachedPlayers[key].ts > playerWithCommands.ts) {
+                    console.log('Cache hit')
                     playerWithCommands = me.cachedPlayers[key]
+                } else {
+                    console.log('Cache stale')
                 }
+            } else {
+                console.log('Cache miss')
             }
             let playerToReturn = {}
             playerToReturn.name = playerWithCommands.name
@@ -78,7 +81,8 @@ module.exports = function (store) {
 
                         if (err) return cb(err)
                         me.cachedPlayers[key] = loadedPlayer
-
+                        console.log('Cache back')
+                        
                         me.getPlayer(name, function (err, Innerplayer) {
 
                             if (err) return cb(err)
