@@ -119,7 +119,7 @@ function isArray(obj) {
 }
 
 function applyToObject(o, op, args) {
-    if (args.length > 1) {
+    if (args.length >= 1) {
         for (var argnum = 0; argnum < args.length - 1; argnum++) {
             args[argnum] = args[argnum].toLowerCase()
             args[argnum] = n.toNormalForm(args[argnum])
