@@ -8,7 +8,11 @@ module.exports = function (msg, args, say) {
     if(args && args.length > 1 && args[1] == "push") {
         operation = "push"
         args.splice(1, 1)
+    } else if(args && args.length > 1 && args[1] == "clear") {
+        operation = "clear"
+        args.splice(1, 1)
     }
+
 
     v.requiresParameters(msg, args.join(' '), 'a players name, like, fug.  E.g. /set player fug hp 99', 1, say, function () {
         v.mustBeDm(msg, "set player", say, function () {
