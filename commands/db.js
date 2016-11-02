@@ -10,7 +10,7 @@ module.exports = function (store) {
         store.get(key, function (err, player) {
             if (err) return cb(err)
             let playerWithCommands = JSON.parse(player)
-            if (playerWithCommands.commands && playerWithCommands.commands.length > 0 && !playerWithCommands.ts) {
+            if (playerWithCommands && playerWithCommands.commands && playerWithCommands.commands.length > 0 && !playerWithCommands.ts) {
                 playerWithCommands.ts = playerWithCommands.commands[playerWithCommands.commands.length - 1].on
             }
             // check cache for newer version...
