@@ -1,7 +1,7 @@
 var synonyms = [
     ['strength', 'str'],
     ['intelligence', 'int'],
-    ['charisma', 'cha'],
+    ['charisma', 'cha', 'char'],
     ['dexterity', 'dex'],
     ['constitution', 'con'],
     ['wisdom', 'wis'],

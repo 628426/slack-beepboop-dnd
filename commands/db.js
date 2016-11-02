@@ -169,7 +169,7 @@ function applyToObject(o, op, args) {
         }
 
     }
-    if (args.length == 2) { // needs a value not object
+    if (args.length == 2 && op != "clear") { // needs a value not object
         let v = null;
         if (o && o.name && o.name == args[0].toLowerCase()) {
             v = o.values
@@ -253,7 +253,10 @@ function applyToObject(o, op, args) {
         }
     } else {
         applyToObject(o[args[0].toLowerCase()], op, args.slice(1))
+    }
 
+    if(args.length == 1 && op == "clear") {
+        o[args[0].toLowerCase()] = null;
     }
 
 }
