@@ -251,12 +251,11 @@ function applyToObject(o, op, args) {
             }
             return;
         }
+    } else if (args.length == 1 && op == "clear") {
+        o[args[0].toLowerCase()] = null;
     } else {
         applyToObject(o[args[0].toLowerCase()], op, args.slice(1))
     }
 
-    if(args.length == 1 && op == "clear") {
-        o[args[0].toLowerCase()] = null;
-    }
 
 }
