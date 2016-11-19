@@ -124,32 +124,35 @@ function applyToObject(o, op, args) {
     args.map((arg) => {
         return n.toNormalForm(arg.toLowerCase())
     })
-    if(!o) {
+    if (!o) {
         o = {}
     }
-    if(!args[0]) {
+    if (!args[0]) {
         return
     }
 
     if (op.toLowerCase() == "set") {
-        if(args.length > 2) {
+        if (args.length > 2) {
             // need to recurse:
-            applyToObject(o[args[0]], op, args.slice(1))    
+            applyToObject(o[args[0]], op, args.slice(1))
         } else if (args.length == 2) {
             o[args[0]] = args[1]
         }
-        
+
     } else if (op.toLowerCase() == "push") {
-        if(args.length > 2) {
+        if (args.length > 2) {
             applyToObject(o[args[0]], op, args.slice(1))
-        } else if(args.length == 2) {
+        } else if (args.length == 2) {
             let v = o[args[0]]
-            o[args[0]] = [].concat(v)
-            o[args[0]].push(args[1])
+            if (v) {
+                o[args[0]] = [].concat(v)
+                o[args[0]].push(args[1])
+                o[args[0]] = o[args[0]].sort()
+            }
         }
     } else if (op.toLowerCase() == "clear") {
-        if(args.length == 1) {
-            delete o[args[0]]    
+        if (args.length == 1) {
+            delete o[args[0]]
         } else {
             applyToObject(o[args[0], op, args.slice(1)])
         }
