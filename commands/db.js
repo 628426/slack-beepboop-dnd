@@ -192,71 +192,72 @@ function applyToObject(o, op, args) {
                     }
 
                     return;
-                } else if (op == "push") {
-                               
-                    if (o && o.name && o.name == args[0]) {
-                        let vv = o.values
-                        console.log(`Found direct::${JSON.stringify(o.values)}`)
-                        o.values = []
-                        if (vv && Array.isArray(vv)) {
-                            vv.forEach(function (value) {
-                                console.log(`Pushing old value into direct array::${value}`)
-                                o.values.push(value)
-                            })
-                        } else if (vv) {
-                            o.values.push(vv)
-                        }
-                        console.log(`Pushing new value into direct array::${args[1]}`)
-                        o.values.push(args[1])
-                        return
-                    } else if (o && o[args[0].toLowerCase()]) {
-
-                        let vv = o[args[0].toLowerCase()]
-                        console.log(`Found indirect::${JSON.stringify(vv)}`)
-                        o[args[0].toLowerCase()] = []
-                        if (vv && Array.isArray(vv)) {
-                            console.log(`Found indirect array::${JSON.stringify(vv)}`)
-                            vv.forEach(function (value) {
-                                console.log(`Pushing old value into indirect array::${value}`)
-                                o[args[0].toLowerCase()].push(value)
-                            })
-                        } else if (vv) {
-                            // vv was something else push it  in
-                            o[args[0].toLowerCase()].push(vv)
-                        }
-                        console.log(`Pushing new value into indirect array::${JSON.stringify(args[1])}`)
-                        o[args[0].toLowerCase()].push(args[1])
-                        return
-                    }
-
-                    v += ',' + args[0]
-                    let vv = v
-                    v = []
-                    if (vv) {
-                        vv.split(',').forEach(function (value) {
-                            v.push(value)
-                        })
-                    }
-
-                    v.push(args[1])
-                    return
                 }
-            } else {
+            } else if (op == "push") {
 
+                if (o && o.name && o.name == args[0]) {
+                    let vv = o.values
+                    console.log(`Found direct::${JSON.stringify(o.values)}`)
+                    o.values = []
+                    if (vv && Array.isArray(vv)) {
+                        vv.forEach(function (value) {
+                            console.log(`Pushing old value into direct array::${value}`)
+                            o.values.push(value)
+                        })
+                    } else if (vv) {
+                        o.values.push(vv)
+                    }
+                    console.log(`Pushing new value into direct array::${args[1]}`)
+                    o.values.push(args[1])
+                    return
+                } else if (o && o[args[0].toLowerCase()]) {
+
+                    let vv = o[args[0].toLowerCase()]
+                    console.log(`Found indirect::${JSON.stringify(vv)}`)
+                    o[args[0].toLowerCase()] = []
+                    if (vv && Array.isArray(vv)) {
+                        console.log(`Found indirect array::${JSON.stringify(vv)}`)
+                        vv.forEach(function (value) {
+                            console.log(`Pushing old value into indirect array::${value}`)
+                            o[args[0].toLowerCase()].push(value)
+                        })
+                    } else if (vv) {
+                        // vv was something else push it  in
+                        o[args[0].toLowerCase()].push(vv)
+                    }
+                    console.log(`Pushing new value into indirect array::${JSON.stringify(args[1])}`)
+                    o[args[0].toLowerCase()].push(args[1])
+                    return
+                } else {
+                    console.log(`${JSON.stringify(o)} ${JSON.stringify(args)}`)
+                }
+
+                v += ',' + args[0]
+                let vv = v
+                v = []
+                if (vv) {
+                    vv.split(',').forEach(function (value) {
+                        v.push(value)
+                    })
+                }
+
+                v.push(args[1])
+                return
             }
+        } 
+    } else {
+        if (o && o.name && o.name == args[0].toLowerCase()) {
+            o.values = args[1]
         } else {
-            if (o && o.name && o.name == args[0].toLowerCase()) {
-                o.values = args[1]
-            } else {
-                o[args[0].toLowerCase()] = args[1]
-            }
-            return;
+            o[args[0].toLowerCase()] = args[1]
         }
-    } else if (args.length == 1 && op == "clear") {
-        delete o[args[0].toLowerCase()] 
-    } else if (args.length > 0 && args[0]) {
-        applyToObject(o[args[0].toLowerCase()], op, args.slice(1))
+        return;
     }
+} else if (args.length == 1 && op == "clear") {
+    delete o[args[0].toLowerCase()]
+} else if (args.length > 0 && args[0]) {
+    applyToObject(o[args[0].toLowerCase()], op, args.slice(1))
+}
 
 
 }
