@@ -253,7 +253,7 @@ function applyToObject(o, op, args) {
         }
     } else if (args.length == 1 && op == "clear") {
         delete o[args[0].toLowerCase()] 
-    } else {
+    } else if (args.length > 0 && args[0]) {
         applyToObject(o[args[0].toLowerCase()], op, args.slice(1))
     }
 

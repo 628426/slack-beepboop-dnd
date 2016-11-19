@@ -9,8 +9,8 @@ module.exports = function (msg, args, say) {
         operation = "push"
         
         args.splice(1, 1)
-        if(args.length < 2) {
-            return say(`:sob: The _push_ keyword requires 2 keywords, the name of the array to push into, and the value to push into it, e.g. /set player fug push proficiencies farting `)
+        if(args.length < 3) {
+            return say(`:sob: The _push_ keyword requires 2 parameters, the name of the array to push into, and the value to push into it, e.g. /set player fug push proficiencies farting `)
         }
     } else if(args && args.length > 1 && args[1] == "clear") {
         operation = "clear"
