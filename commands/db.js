@@ -124,7 +124,9 @@ function applyToObject(o, op, args) {
     args.map((arg) => {
         return n.toNormalForm(arg.toLowerCase())
     })
-
+    if(!o) {
+        o = {}
+    }
     if(!args[0]) {
         return
     }
@@ -132,7 +134,7 @@ function applyToObject(o, op, args) {
     if (op.toLowerCase() == "set") {
         if(args.length > 2) {
             // need to recurse:
-            return applyToObject(o[args[0]], op, args.slice(1))    
+            applyToObject(o[args[0]], op, args.slice(1))    
         } else if (args.length == 2) {
             o[args[0]] = args[1]
         }
@@ -140,7 +142,11 @@ function applyToObject(o, op, args) {
     } else if (op.toLowerCase() == "push") {
 
     } else if (op.toLowerCase() == "clear") {
-
+        if(args.length == 1) {
+            delete o[args[0]]    
+        } else {
+            applyToObject(o[args[0], op, args.slice(1)])
+        }
     }
 }
 
