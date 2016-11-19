@@ -193,6 +193,7 @@ function applyToObject(o, op, args) {
 
                     return;
                 } else if (op == "push") {
+                               
                     if (o && o.name && o.name == args[0]) {
                         let vv = o.values
                         console.log(`Found direct::${JSON.stringify(o.values)}`)
