@@ -146,9 +146,12 @@ function applyToObject(o, op, args) {
             let v = o[args[0]]
             if (v) {
                 o[args[0]] = [].concat(v)
-                o[args[0]].push(args[1])
-                o[args[0]] = o[args[0]].sort()
+            } else {
+                o[args[0]] = []
             }
+            o[args[0]].push(args[1])
+            o[args[0]] = o[args[0]].sort()
+
         }
     } else if (op.toLowerCase() == "clear") {
         if (args.length == 1) {
