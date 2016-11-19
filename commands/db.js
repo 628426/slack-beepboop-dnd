@@ -119,6 +119,32 @@ function isArray(obj) {
 }
 
 function applyToObject(o, op, args) {
+
+    // tidy up args
+    args.map((arg) => {
+        return n.toNormalForm(arg.toLowerCase())
+    })
+
+    if(!args[0]) {
+        return
+    }
+
+    if (op.toLowerCase() == "set") {
+        if(args.length > 2) {
+            // need to recurse:
+            return applyToObject(o[args[0]], op, args.slice(1))    
+        } else if (args.length == 2) {
+            o[args[0]] = args[1]
+        }
+        
+    } else if (op.toLowerCase() == "push") {
+
+    } else if (op.toLowerCase() == "clear") {
+
+    }
+}
+
+function applyToObject2(o, op, args) {
     if (args.length >= 1) {
         for (var argnum = 0; argnum < args.length - 1; argnum++) {
             args[argnum] = args[argnum].toLowerCase()
