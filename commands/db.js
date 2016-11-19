@@ -140,7 +140,13 @@ function applyToObject(o, op, args) {
         }
         
     } else if (op.toLowerCase() == "push") {
-
+        if(args.length > 2) {
+            applyToObject(o[args[0]], op, args.slice(1))
+        } else if(args.length == 2) {
+            let v = o[args[0]]
+            o[args[0]] = [].concat(v)
+            o[args[0]].push(args[1])
+        }
     } else if (op.toLowerCase() == "clear") {
         if(args.length == 1) {
             delete o[args[0]]    
