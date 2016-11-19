@@ -136,12 +136,19 @@ function applyToObject(o, op, args) {
             // need to recurse:
             applyToObject(o[args[0]], op, args.slice(1))
         } else if (args.length == 2) {
-            o[args[0]] = args[1]
+            try {
+                o[args[0]] = args[1]
+            } catch(e) {
+                
+            }
+            
         }
 
     } else if (op.toLowerCase() == "push") {
         if (args.length > 2) {
+
             applyToObject(o[args[0]], op, args.slice(1))
+
         } else if (args.length == 2) {
             let v = o[args[0]]
             if (v) {
