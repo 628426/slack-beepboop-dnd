@@ -248,20 +248,22 @@ function applyToObject(o, op, args) {
             return
         }
 
-    } else {
-        if (o && o.name && o.name == args[0].toLowerCase()) {
-            o.values = args[1]
-        } else {
-            o[args[0].toLowerCase()] = args[1]
-        }
-        return;
     }
 
-    if (args.length == 1 && op == "clear") {
+    if (o && o.name && o.name == args[0].toLowerCase()) {
+        o.values = args[1]
+
+    } else if (args.length == 1 && op == "clear") {
         delete o[args[0].toLowerCase()]
     } else if (args.length > 0 && args[0]) {
         applyToObject(o[args[0].toLowerCase()], op, args.slice(1))
+        return;
     }
+    else {
+        o[args[0].toLowerCase()] = args[1]
+
+    }
+
 
 
 }
