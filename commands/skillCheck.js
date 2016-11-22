@@ -29,14 +29,14 @@ module.exports = function (skill, attribute) {
                         isProficient = true
                     }
                 } else {
-                    profWarn = `(WARNING: Couldn't find any proficiencies for ${user}, have your d use /set player ${user} proficiencies stealth)`
+                    profWarn = `(WARNING: Couldn't find any proficiencies for ${user}, have your dm use /set player ${user} proficiencies stealth)`
                 }
 
                 let rs = `d20+${Math.floor((player[attribute] - 10) / 2)}`
                 if(isProficient && player.level) {
                     rs += '+' + (2 + Math.floor((player.level / 4))).toString()
                 } else if(!player.level) {
-                    profWarn = `(WARNING: Couldn't find level for ${user}, have your d use /set player ${user} level 1)`
+                    profWarn = `(WARNING: Couldn't find level for ${user}, have your dm use /set player ${user} level 1)`
                 }
                 
                 let flavour = ``
