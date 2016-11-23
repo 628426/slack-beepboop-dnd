@@ -121,7 +121,7 @@ function isArray(obj) {
 function applyToObject(o, op, args) {
 
     // tidy up args
-    args.map((arg) => {
+    args = args.map((arg) => {
         return n.toNormalForm(arg.toLowerCase())
     })
     if (!o) {

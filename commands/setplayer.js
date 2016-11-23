@@ -27,6 +27,8 @@ module.exports = function (msg, args, say) {
 
                 db.setPlayer(args[0], msg.body["user_name"], operation, args.slice(1), Date.now(), function (err, player) {
                     if (err) return say(`:sob: Sorry, ${err}`)
+                    let a = ['charisma','strength','constitution','wisdom','intelligence','level','proficiencies','class','dexterity']
+                    
                     return say(JSON.stringify(player, null, 4))
                 })
             })
