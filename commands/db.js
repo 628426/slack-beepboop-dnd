@@ -1,8 +1,9 @@
 'use strict'
 const n = require('./normaliser.js')
+const cachedPlayers = {}
 module.exports = function (store) {
     let db = {}
-    db.cachedPlayers = {}
+
     db.getPlayer = function (name, cb) {
         let me = this;
         let key = "PLAYER_" + name;
@@ -14,10 +15,10 @@ module.exports = function (store) {
                 playerWithCommands.ts = playerWithCommands.commands[playerWithCommands.commands.length - 1].on
             }
             // check cache for newer version...
-            if (me.cachedPlayers && me.cachedPlayers[key] && playerWithCommands.ts) {
-                if (me.cachedPlayers[key].ts > playerWithCommands.ts) {
+            if (cachedPlayers[key] && playerWithCommands.ts) {
+                if (cachedPlayers[key].ts > playerWithCommands.ts) {
                     console.log('G Cache hit')
-                    playerWithCommands = me.cachedPlayers[key]
+                    playerWithCommands = cachedPlayers[key]
                 } else {
                     console.log('G Cache stale')
                 }
@@ -59,10 +60,10 @@ module.exports = function (store) {
                         loadedPlayer.ts = loadedPlayer.commands[loadedPlayer.commands.length - 1].ts
                     }
                     // check cache for newer version...
-                    if (me.cachedPlayers && me.cachedPlayers[key] && loadedPlayer.ts) {
-                        if (me.cachedPlayers[key].ts > loadedPlayer.ts) {
+                    if (cachedPlayers[key] && loadedPlayer.ts) {
+                        if (cachedPlayers[key].ts > loadedPlayer.ts) {
                             console.log('SG Cache hit')
-                            loadedPlayer = me.cachedPlayers[key]
+                            loadedPlayer = cachedPlayers[key]
                         } else {
                             console.log('SG Cache stale')
                         }
@@ -85,7 +86,7 @@ module.exports = function (store) {
                     store.set(key, JSON.stringify(loadedPlayer), function (err) {
 
                         if (err) return cb(err)
-                        me.cachedPlayers[key] = loadedPlayer
+                        cachedPlayers[key] = loadedPlayer
                         console.log('Cache back')
 
                         me.getPlayer(name, function (err, Innerplayer) {
