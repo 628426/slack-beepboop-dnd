@@ -7,7 +7,7 @@ function getWeapon(player, params) {
     unarmed.attack = '1d20'
     unarmed.modifier = 'strength'
     unarmed.damage = '1d1'
-    if (params[0].toLowerCase() == "unarmed") {
+    if (params && params[0] && params[0].toLowerCase() == "unarmed") {
         weapon = unarmed
     }
     console.log(`looking for the weapon of ${JSON.stringify(player)} using ${JSON.stringify(params)}`)
@@ -45,7 +45,6 @@ function getWeapon(player, params) {
     // add weapon modifiers
     weapon.attackmodifier = weapon.attackmodifier || weapon.modifier
     weapon.damagemodifier = weapon.damagemodifier || weapon.modifier
-
 
     return weapon
 }
