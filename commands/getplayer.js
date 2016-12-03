@@ -14,7 +14,11 @@ module.exports = function (msg, args, say) {
                         output = output[an]
                     })
                 }
-                say(JSON.stringify(output, null, 4))
+                let newoutput = {
+
+                }
+                newoutput[args.join('.')] = output
+                say(JSON.stringify(newoutput, null, 4))
             })
         })
     })
