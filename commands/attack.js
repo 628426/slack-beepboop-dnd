@@ -1,6 +1,7 @@
 const r = require('./roll/index.js')
 const mechanics = require('./mechanics.js')
 function getWeapon(player, params) {
+    console.log(`looking for the weapon of ${JSON.stringify(player)} using ${JSON.stringify(params)}`)
     let weapon = null
     let weaponName = null
     // did the supply params?
@@ -53,6 +54,7 @@ module.exports.attack = function (msg, params, say) {
         if (err) throw err
         if (player) {
             console.log('got player a ' + user)
+            console.log('got params ' + JSON.stringify(params))
             console.log('got playerj a ' + JSON.stringify(player))
             let weapon = getWeapon(player, params)
             console.log('got playerj ab ' + JSON.stringify(player))
@@ -70,17 +72,17 @@ module.exports.attack = function (msg, params, say) {
             }
             console.log('got flavour ' + flavour)
             let result = `@${user} made an attack roll (${weapon.name}${flavour}) of _${rollText}_ for and got *${roll.result}* (dice rolled were ${JSON.stringify(roll.rolled)})`
-
+            say(result)
             console.log('get resuilt' + result)
             if (weapon.name != player.lastWeaponAttackedWith) {
                 console.log('writing back')
                 db.setPlayer(user, user, 'set', ['lastWeaponAttackedWith', weapon.name], Date.now(), function (err, settedplayer) {
                     console.log('writing returning')
-                    return say(result)
+                    return 
                 })
             } else {
-                console.log('returning no write')
-                return say(result)
+                
+                return
             }
         }
 
@@ -104,7 +106,7 @@ module.exports.damage = function (msg, params, say) {
             if (params && params.length > 0) {
                 flavour = ` ${params.join(' ')}`
             }
-            let result = `@${user} made an damage roll (${weapon.name}${flavour}) of  _${rollText}_ for and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`
+            let result = `@${user} made an damage roll (${weapon.name}${flavour}) of  _${rollText}_ for and got *${roll.result}* (dice rolled were ${JSON.stringify(roll.rolled)})`
 
             return say(result)
 
