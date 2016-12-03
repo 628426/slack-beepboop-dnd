@@ -8,13 +8,19 @@ module.exports = function (msg, params, say) {
         say,
         function () {
             // check if params[0] references another function...
+            if(params[0].toLowerCase() == "initiative") {
+                params[0] = "dexterity"
+                if(params.length > 1) {
+                    params[1] = "INITIATIVE"
+                } else {
+                    params.push("INITIATIVE")
+                }
+            }
             let commands = require('./globals.js').commands
             if (commands['check'] &&
                 commands['check'][params[0]]) {
                     return commands['check'][params[0]].cmd(msg, params, say)
             } else {
-
-
                 let reason = ''
                 if (params.length > 1) {
                     reason = ' (_' + params.slice(1).join(' ') + '_)'

@@ -6,10 +6,18 @@ function getWeapon(player, params) {
     if (params && params.length > 0 && params[0]) {
         // did they match a weapon:
         if (player && player.weapons && player.weapons[params[0]]) {
-            weaponName = params[0]
             weapon = player.weapons[params[0]]
-            params = params.slice(1)
+
+        } else if (player && player.weapons) {
+            let matchingWeaponKeys = Object.keys(player.weapons).filter(w => {
+                return w.startsWith(params[0])
+            })
+            if(matchingWeaponKeys.length == 1) {
+                weapon = player.weapons[matchingWeaponKeys[0]]
+            }
         }
+
+        params = params.slice(1)
     }
 
     // do they have a weapon yet?
@@ -44,10 +52,10 @@ module.exports.attack = function (msg, params, say) {
         let weapon = getWeapon(player, params)
 
         let mechanics = require('./mechanics.js')
-        roll = `${weapon.attack}+${mechanics.getProficiency(player)}+${mechanics.getModifier(player, weapon.attackmodifier)}`
-
+        rollText = `${weapon.attack}+${mechanics.getProficiency(player)}+${mechanics.getModifier(player, weapon.attackmodifier)}`
+        let rollDesc = `${weapon.attack}+${mechanics.getProficiency(player)}(player proficiency bonus for level ${player.level}+${mechanics.getModifier(player, weapon.attackmodifier)}`
         let flavour = ``
-        let roll = new r().roll(rs)
+        let roll = new r().roll(rollText)
         if (params && params.length > 0) {
             flavour = ` ${params.join(' ')}`
         }
@@ -72,10 +80,10 @@ module.exports.damage = function (msg, params, say) {
         let weapon = getWeapon(player, [player.lastWeaponAttackedWith])
 
         let mechanics = require('./mechanics.js')
-        roll = `${weapon.damage}+${mechanics.getModifier(player, weapon.attackmodifier)}`
+        rollText = `${weapon.damage}+${mechanics.getModifier(player, weapon.attackmodifier)}`
 
         let flavour = ``
-        let roll = new r().roll(rs)
+        let roll = new r().roll(rollText)
         if (params && params.length > 0) {
             flavour = ` ${params.join(' ')}`
         }
