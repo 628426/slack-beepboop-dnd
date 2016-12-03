@@ -46,9 +46,11 @@ function getWeapon(player, params) {
 
 module.exports.attack = function (msg, params, say) {
     let db = require('./db')(require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }))
-    let user = msg.body["user_name"]
+    let user = msg.body["user_name"].toLowerCase()
 
     db.getPlayer(user, function (err, player) {
+        console.log('got player ' + user)
+        console.log('got playerj ' + JSON.stringify(player))
         let weapon = getWeapon(player, params)
 
         let mechanics = require('./mechanics.js')
