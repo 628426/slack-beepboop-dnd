@@ -39,8 +39,8 @@ function getWeapon(player, params) {
         weapon.damage = '1d1'
     }
     // add weapon modifiers
-    weapon.attackmodifier == weapon.attackmodifier || weapon.modifier
-    weapon.damagemodifier == weapon.damagemodifier || weapon.modifier
+    weapon.attackmodifier = weapon.attackmodifier || weapon.modifier
+    weapon.damagemodifier = weapon.damagemodifier || weapon.modifier
 
 
     return weapon
@@ -74,9 +74,9 @@ module.exports.attack = function (msg, params, say) {
             let result = `@${user} made an attack roll (${weapon.name}${flavour}) of _${rollText}_ for and got *${roll.result}* (dice rolled were ${JSON.stringify(roll.rolled)})`
             say(result)
             console.log('get resuilt' + result)
-            if (weapon.name != player.lastWeaponAttackedWith) {
+            if (weapon.name != player.lastweaponattackedwith) {
                 console.log('writing back')
-                db.setPlayer(user, user, 'set', ['lastWeaponAttackedWith', weapon.name], Date.now(), function (err, settedplayer) {
+                db.setPlayer(user, user, 'set', ['lastweaponattackedwith', weapon.name], Date.now(), function (err, settedplayer) {
                     console.log('writing returning')
                     return 
                 })
