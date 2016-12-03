@@ -8,7 +8,7 @@ module.exports.getModifier = function(player, attribute) {
 }
 
 module.exports.getProficiency = function(player) {
-    if(player.level < 4) {
+    if(player && player.level < 4) {
         return 2
     } else {
         return 0
