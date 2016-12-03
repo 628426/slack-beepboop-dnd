@@ -138,7 +138,8 @@ function applyToObject(o, op, args) {
             // set player griswold weapons shortsword
             // followed by
             // set player griswold weapons shortsword attack 1d6+1
-            if (o[args[0]] !== Object(o[args[0]])) {
+            if (o[args[0]] &&
+                o[args[0]] !== Object(o[args[0]])) {
                 // not an object but more than 2 in the array... needs upgrading:
                 // used to be a string so set "name"
                 if (typeof o[args[0]] === 'string' || o[args[0]] instanceof String) {
