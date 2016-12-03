@@ -12,7 +12,7 @@ function getWeapon(player, params) {
             let matchingWeaponKeys = Object.keys(player.weapons).filter(w => {
                 return w.startsWith(params[0])
             })
-            if(matchingWeaponKeys.length == 1) {
+            if (matchingWeaponKeys.length == 1) {
                 weapon = player.weapons[matchingWeaponKeys[0]]
             }
         }
@@ -49,10 +49,10 @@ module.exports.attack = function (msg, params, say) {
     let user = msg.body["user_name"].toLowerCase()
 
     db.getPlayer(user, function (err, player) {
-        console.log('got player ' + user)
-        console.log('got playerj ' + JSON.stringify(player))
+        console.log('got player a ' + user)
+        console.log('got playerj a ' + JSON.stringify(player))
         let weapon = getWeapon(player, params)
-
+        console.log('got weapon ' + weapon.name)
         let mechanics = require('./mechanics.js')
         rollText = `${weapon.attack}+${mechanics.getProficiency(player)}+${mechanics.getModifier(player, weapon.attackmodifier)}`
         let rollDesc = `${weapon.attack}+${mechanics.getProficiency(player)}(player proficiency bonus for level ${player.level}+${mechanics.getModifier(player, weapon.attackmodifier)}`
@@ -62,9 +62,9 @@ module.exports.attack = function (msg, params, say) {
             flavour = ` ${params.join(' ')}`
         }
         let result = `@${user} made an attack roll (${weapon.name}${flavour}) of  _${rs}_ for and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`
-
+        console.log(result)
         if (weapon.name != player.lastWeaponAttackedWith) {
-            db.setPlayer(user, user, 'set', ['lastWeaponAttackedWith', weapon.name], Date.now(), function (err, player) {
+            db.setPlayer(user, user, 'set', ['lastWeaponAttackedWith', weapon.name], Date.now(), function (err, settedplayer) {
                 return say(result)
             })
         } else {
