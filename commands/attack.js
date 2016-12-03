@@ -56,20 +56,26 @@ module.exports.attack = function (msg, params, say) {
         console.log('got weapon ' + weapon.name)
 
         rollText = `${weapon.attack}+${mechanics.getProficiency(player)}+${mechanics.getModifier(player, weapon.attackmodifier)}`
-        console.log('got rolltext ' + weapon.name)
-        let rollDesc = `${weapon.attack}+${mechanics.getProficiency(player)}(player proficiency bonus for level ${player.level}+${mechanics.getModifier(player, weapon.attackmodifier)}`
+        console.log('got rolltext ' + rollText)
+        let rollDesc = `${weapon.attack}+${mechanics.getProficiency(player)}(player proficiency bonus for level ${player}+${mechanics.getModifier(player, weapon.attackmodifier)}`
+        console.log('got rollDesc ' + rollDesc)
         let flavour = ``
         let roll = new r().roll(rollText)
         if (params && params.length > 0) {
             flavour = ` ${params.join(' ')}`
         }
-        let result = `@${user} made an attack roll (${weapon.name}${flavour}) of  _${rs}_ for and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`
-        console.log(result)
+        console.log('got flavour ' + flavour)
+        let result = `@${user} made an attack roll (${weapon.name}${flavour}) of  _${rollText}_ for and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`
+
+        console.log('get resuilt' + result)
         if (weapon.name != player.lastWeaponAttackedWith) {
+            console.log('writing back')
             db.setPlayer(user, user, 'set', ['lastWeaponAttackedWith', weapon.name], Date.now(), function (err, settedplayer) {
+                console.log('writing returning')
                 return say(result)
             })
         } else {
+            console.log('returning')
             return say(result)
         }
 
