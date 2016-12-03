@@ -19,7 +19,7 @@ module.exports = function (msg, params, say) {
                 return require('./attack.js').attack(msg, params.slice(1), say)
             } else if (params[0].toLowerCase() == "damage") {
                 return require('./attack.js').damage(msg, params.slice(1), say)
-            } els
+            } 
             let commands = require('./globals.js').commands
             if (commands['check'] &&
                 commands['check'][params[0]]) {
