@@ -1,7 +1,7 @@
 'use strict'
 const os = require('os')
 const n = require('./normaliser.js')
-var commands = {}
+const commands = require("./globals.js").commands
 
 function handleCommandAndKeyword(slapp, command, keyword, description, example, cmd) {
     let firstWireupForCommand = false
@@ -121,63 +121,7 @@ module.exports = (slapp) => {
 
     })
 
-    let skills = [{
-        name: 'acrobatics',
-        attribute: 'dex'
-    },
-    {
-        name: 'animalhandling',
-        attribute: 'wis'
-    },
-    {
-        name: 'arcana',
-        attribute: 'int'
-    },
-    {
-        name: 'athletics',
-        attribute: 'str'
-    }, {
-        name: 'deception',
-        attribute: 'cha'
-    }, {
-        name: 'history',
-        attribute: 'int'
-    }, {
-        name: 'insight',
-        attribute: 'int'
-    },
-    {
-        name: 'intimidation',
-        attribute: 'cha'
-    }, {
-        name: 'investigation',
-        attribute: 'int'
-    }, {
-        name: 'medicine',
-        attribute: 'wis'
-    }, {
-        name: 'nature',
-        attribute: 'int'
-    }, {
-        name: 'perception',
-        attribute: 'wis'
-    }, {
-        name: 'persuasion',
-        attribute: 'cha'
-    }, {
-        name: 'religion',
-        attribute: 'int'
-    }, {
-        name: 'sleightofhand',
-        attribute: 'dex'
-    }, {
-        name: 'stealth',
-        attribute: 'dex'
-    }, {
-        name: 'survival',
-        attribute: 'wis'
-    }
-    ]
+    let skills = require('./skills.js')
 
     for (var s in skills) {
         let sname = skills[s].name
