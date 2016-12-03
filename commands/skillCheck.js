@@ -44,7 +44,7 @@ module.exports = function (skill, attribute) {
                 if (params && params.length > 1) {
                     flavour = `(_${params.slice(1).join(' ')}_) `
                 }
-                return say(`@${user} rolled _${rs}_ for a ${skill} check ${flavour}and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)}) ${profWarn}`)
+                return say(`@${user} rolled _${rs}_ for a ${skill} check ${flavour}and got *${roll.result}* (dice rolled were ${JSON.stringify(roll.rolled)}) ${profWarn}`)
             }
         })
     }

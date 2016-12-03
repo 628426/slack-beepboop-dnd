@@ -69,7 +69,7 @@ module.exports.attack = function (msg, params, say) {
                 flavour = ` ${params.join(' ')}`
             }
             console.log('got flavour ' + flavour)
-            let result = `@${user} made an attack roll (${weapon.name}${flavour}) of  _${rollText}_ for and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`
+            let result = `@${user} made an attack roll (${weapon.name}${flavour}) of _${rollText}_ for and got *${roll.result}* (dice rolled were ${JSON.stringify(roll.rolled)})`
 
             console.log('get resuilt' + result)
             if (weapon.name != player.lastWeaponAttackedWith) {
@@ -97,14 +97,14 @@ module.exports.damage = function (msg, params, say) {
             let weapon = getWeapon(player, [player.lastWeaponAttackedWith])
 
             let mechanics = require('./mechanics.js')
-            rollText = `${weapon.damage}+${mechanics.getModifier(player, weapon.attackmodifier)}`
+            rollText = `${weapon.damage}+${mechanics.getModifier(player, weapon.damagemodifier)}`
 
             let flavour = ``
             let roll = new r().roll(rollText)
             if (params && params.length > 0) {
                 flavour = ` ${params.join(' ')}`
             }
-            let result = `@${user} made an damage roll (${weapon.name}${flavour}) of  _${rs}_ for and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`
+            let result = `@${user} made an damage roll (${weapon.name}${flavour}) of  _${rollText}_ for and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`
 
             return say(result)
 
