@@ -18,7 +18,7 @@ function getWeapon(player, params) {
             }
         }
 
-        params = params.slice(1)
+        params.slice(1)
     }
 
     // do they have a weapon yet?
@@ -58,7 +58,8 @@ module.exports.attack = function (msg, params, say) {
 
         rollText = `${weapon.attack}+${mechanics.getProficiency(player)}+${mechanics.getModifier(player, weapon.attackmodifier)}`
         console.log('got rolltext ' + rollText)
-        let rollDesc = `${weapon.attack}+${mechanics.getProficiency(player)}(player proficiency bonus for level ${player}+${mechanics.getModifier(player, weapon.attackmodifier)}`
+        console.log('got playerj ac ' + JSON.stringify(player))
+        let rollDesc = `${weapon.attack}+${mechanics.getProficiency(player)}(player proficiency bonus for level ${player.level}+${mechanics.getModifier(player, weapon.attackmodifier)}`
         console.log('got rollDesc ' + rollDesc)
         let flavour = ``
         let roll = new r().roll(rollText)
