@@ -16,23 +16,26 @@ module.exports = function (msg, params, say) {
                     params.push("INITIATIVE")
                 }
             } else if (params[0].toLowerCase() == "attack") {
+                console.log('calling attack.attack')
                 return require('./attack.js').attack(msg, params.slice(1), say)
             } else if (params[0].toLowerCase() == "damage") {
+                console.log('calling attack.damage')
                 return require('./attack.js').damage(msg, params.slice(1), say)
-            } 
-            let commands = require('./globals.js').commands
-            if (commands['check'] &&
-                commands['check'][params[0]]) {
-                return commands['check'][params[0]].cmd(msg, params, say)
             } else {
-                let reason = ''
-                if (params.length > 1) {
-                    reason = ' (_' + params.slice(1).join(' ') + '_)'
+                let commands = require('./globals.js').commands
+                if (commands['check'] &&
+                    commands['check'][params[0]]) {
+                    return commands['check'][params[0]].cmd(msg, params, say)
+                } else {
+                    let reason = ''
+                    if (params.length > 1) {
+                        reason = ' (_' + params.slice(1).join(' ') + '_)'
+                    }
+
+                    var roll = new r().roll(params[0])
+
+                    return say(`@${msg.body["user_name"]} rolled _${params[0]}_${reason} and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`)
                 }
-
-                var roll = new r().roll(params[0])
-
-                return say(`@${msg.body["user_name"]} rolled _${params[0]}_${reason} and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`)
             }
         })
 }
