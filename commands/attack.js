@@ -48,7 +48,7 @@ module.exports.attack = function (msg, params, say) {
     let db = require('./db')(require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }))
     let user = msg.body["user_name"]
 
-    db.getPlayer(args[0], function (err, player) {
+    db.getPlayer(params[0], function (err, player) {
         let weapon = getWeapon(player, params)
 
         let mechanics = require('./mechanics.js')
@@ -76,7 +76,7 @@ module.exports.damage = function (msg, params, say) {
     let db = require('./db')(require('./persist')(msg._slapp.client, { token: msg.meta.app_token, schema: 'dnd' }))
     let user = msg.body["user_name"]
 
-    db.getPlayer(args[0], function (err, player) {
+    db.getPlayer(params[0], function (err, player) {
         let weapon = getWeapon(player, [player.lastWeaponAttackedWith])
 
         let mechanics = require('./mechanics.js')
