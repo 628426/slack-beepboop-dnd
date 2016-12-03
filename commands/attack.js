@@ -1,4 +1,5 @@
 const r = require('./roll/index.js')
+const mechanics = require('./mechanics.js')
 function getWeapon(player, params) {
     let weapon = null
     let weaponName = null
@@ -24,7 +25,7 @@ function getWeapon(player, params) {
     if (!weapon) {
         // what weapon did they use last time?
         if (player && player.lastWeaponAttackedWith && player.weapons && player.weapons[player.lastWeaponAttackedWith]) {
-            weapon = player.lastWeaponAttackedWith
+            weapon = player.weapons[player.lastWeaponAttackedWith]
         }
     }
 
@@ -53,8 +54,9 @@ module.exports.attack = function (msg, params, say) {
         console.log('got playerj a ' + JSON.stringify(player))
         let weapon = getWeapon(player, params)
         console.log('got weapon ' + weapon.name)
-        let mechanics = require('./mechanics.js')
+
         rollText = `${weapon.attack}+${mechanics.getProficiency(player)}+${mechanics.getModifier(player, weapon.attackmodifier)}`
+        console.log('got rolltext ' + weapon.name)
         let rollDesc = `${weapon.attack}+${mechanics.getProficiency(player)}(player proficiency bonus for level ${player.level}+${mechanics.getModifier(player, weapon.attackmodifier)}`
         let flavour = ``
         let roll = new r().roll(rollText)
