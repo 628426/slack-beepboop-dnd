@@ -255,4 +255,12 @@ module.exports = (slapp) => {
 
     // wireupCommand(slapp, 'dndhelp', 'Lists available commands e.g. /dndhelp', dndhelp)
 
+
+    slapp.message('.*(fart).*', ['direct_mention', 'direct_message'], (msg, text, greeting) => {
+        msg
+            .say(`${greeting}, how are you?`)
+            .route('handleHowAreYou')  // where to route the next msg in the conversation
+    })
+
+
 }

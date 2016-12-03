@@ -134,14 +134,28 @@ function applyToObject(o, op, args) {
     if (op.toLowerCase() == "set") {
         if (args.length > 2) {
             // need to recurse:
+            // take a peek to see if we need to turn something into an object...
+            // set player griswold weapons shortsword
+            // followed by
+            // set player griswold weapons shortsword attack 1d6+1
+            if (o[args[0]] !== Object(o[args[0]])) {
+                // not an object but more than 2 in the array... needs upgrading:
+                // used to be a string so set "name"
+                if (typeof o[args[0]] === 'string' || o[args[0]] instanceof String) {
+                    let v = o[args[0]]
+                    o[args[0]] = {}
+                    o[args[0]].name = v
+                }
+            }
             applyToObject(o[args[0]], op, args.slice(1))
+
         } else if (args.length == 2) {
             try {
                 o[args[0]] = args[1]
-            } catch(e) {
-                
+            } catch (e) {
+
             }
-            
+
         }
 
     } else if (op.toLowerCase() == "push") {
