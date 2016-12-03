@@ -18,15 +18,13 @@ function getWeapon(player, params) {
                 weapon = player.weapons[matchingWeaponKeys[0]]
             }
         }
-
-        params.slice(1)
     }
 
     // do they have a weapon yet?
     if (!weapon) {
         // what weapon did they use last time?
-        if (player && player.lastWeaponAttackedWith && player.weapons && player.weapons[player.lastWeaponAttackedWith]) {
-            weapon = player.weapons[player.lastWeaponAttackedWith]
+        if (player && player.lastweaponattackedwith && player.weapons && player.weapons[player.lastweaponattackedwith]) {
+            weapon = player.weapons[player.lastweaponattackedwith]
         }
     }
 
@@ -77,7 +75,7 @@ module.exports.attack = function (msg, params, say) {
             if (weapon.name != player.lastweaponattackedwith) {
                 console.log('writing back')
                 db.setPlayer(user, user, 'set', ['lastweaponattackedwith', weapon.name], Date.now(), function (err, settedplayer) {
-                    console.log('writing returning')
+                    console.log('writing returning after setting ' + weapon.name + ' see ' + settedplayer.lastweaponattackedwith)
                     return 
                 })
             } else {
@@ -96,7 +94,7 @@ module.exports.damage = function (msg, params, say) {
     db.getPlayer(user, function (err, player) {
         if (err) throw err
         if (player) {
-            let weapon = getWeapon(player, [player.lastWeaponAttackedWith])
+            let weapon = getWeapon(player, [player.lastweaponattackedwith])
 
             let mechanics = require('./mechanics.js')
             rollText = `${weapon.damage}+${mechanics.getModifier(player, weapon.damagemodifier)}`
