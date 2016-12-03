@@ -53,6 +53,7 @@ module.exports.attack = function (msg, params, say) {
         console.log('got player a ' + user)
         console.log('got playerj a ' + JSON.stringify(player))
         let weapon = getWeapon(player, params)
+        console.log('got playerj ab ' + JSON.stringify(player))
         console.log('got weapon ' + weapon.name)
 
         rollText = `${weapon.attack}+${mechanics.getProficiency(player)}+${mechanics.getModifier(player, weapon.attackmodifier)}`
@@ -75,7 +76,7 @@ module.exports.attack = function (msg, params, say) {
                 return say(result)
             })
         } else {
-            console.log('returning')
+            console.log('returning no write')
             return say(result)
         }
 
