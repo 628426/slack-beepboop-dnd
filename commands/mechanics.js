@@ -1,5 +1,5 @@
 module.exports.getModifier = function(player, attribute) {
-    if(!player[attribute]) {
+    if(!player || !player[attribute]) {
         return 0;
     }
     let value = player[attribute]
