@@ -145,10 +145,10 @@ function applyToObject(o, op, args) {
                 if (typeof o[args[0]] === 'string' || o[args[0]] instanceof String) {
                     let v = o[args[0]]
                     o[args[0]] = {}
-                    o[args[0]][o[args[1]]] = {}
-                    o[args[0]][o[args[1]]].name = v
+                    o[args[0]][args[1]] = {}
+                    o[args[0]][args[1]].name = v
                 }
-                applyToObject(o[args[0]][o[args[1]]], op, args.slice(2))
+                applyToObject(o[args[0]][args[1]], op, args.slice(2))
             } else {
                 applyToObject(o[args[0]], op, args.slice(1))
             }
