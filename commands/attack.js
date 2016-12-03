@@ -1,11 +1,20 @@
 const r = require('./roll/index.js')
 const mechanics = require('./mechanics.js')
 function getWeapon(player, params) {
-    console.log(`looking for the weapon of ${JSON.stringify(player)} using ${JSON.stringify(params)}`)
     let weapon = null
+    let unarmed = {}
+    unarmed.name = 'unarmed'
+    unarmed.attack = '1d20'
+    unarmed.modifier = 'strength'
+    unarmed.damage = '1d1'
+    if (params[0].toLowerCase() == "unarmed") {
+        weapon = unarmed
+    }
+    console.log(`looking for the weapon of ${JSON.stringify(player)} using ${JSON.stringify(params)}`)
+
     let weaponName = null
     // did the supply params?
-    if (params && params.length > 0 && params[0]) {
+    if (!weapon && params && params.length > 0 && params[0]) {
         // did they match a weapon:
         if (player && player.weapons && player.weapons[params[0]]) {
             weapon = player.weapons[params[0]]
@@ -16,6 +25,7 @@ function getWeapon(player, params) {
             })
             if (matchingWeaponKeys.length == 1) {
                 weapon = player.weapons[matchingWeaponKeys[0]]
+                params[0] = matchingWeaponKeys[0]
             }
         }
     }
@@ -30,11 +40,7 @@ function getWeapon(player, params) {
 
     // do they have a weapon yet?
     if (!weapon) {
-        weapon = {}
-        weapon.name = 'unarmed'
-        weapon.attack = '1d20'
-        weapon.modifier = 'strength'
-        weapon.damage = '1d1'
+        weapon = unarmed
     }
     // add weapon modifiers
     weapon.attackmodifier = weapon.attackmodifier || weapon.modifier
@@ -66,7 +72,12 @@ module.exports.attack = function (msg, params, say) {
             let flavour = ``
             let roll = new r().roll(rollText)
             if (params && params.length > 0) {
-                flavour = ` ${params.join(' ')}`
+                if (params[0].toLowerCase() == weapon.name.toLowerCase() && params.length > 1) {
+                    params = params.slice(1)
+                }
+                if (params.length > 0) {
+                    flavour = ` ${params.join(' ')}`
+                }
             }
             console.log('got flavour ' + flavour)
             let result = `@${user} made an attack roll (${weapon.name}${flavour}) of _${rollText}_ for and got *${roll.result}* (dice rolled were ${JSON.stringify(roll.rolled)})`
@@ -76,10 +87,10 @@ module.exports.attack = function (msg, params, say) {
                 console.log('writing back')
                 db.setPlayer(user, user, 'set', ['lastweaponattackedwith', weapon.name], Date.now(), function (err, settedplayer) {
                     console.log('writing returning after setting ' + weapon.name + ' see ' + settedplayer.lastweaponattackedwith)
-                    return 
+                    return
                 })
             } else {
-                
+
                 return
             }
         }
