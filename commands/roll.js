@@ -8,18 +8,22 @@ module.exports = function (msg, params, say) {
         say,
         function () {
             // check if params[0] references another function...
-            if(params[0].toLowerCase() == "initiative") {
+            if (params[0].toLowerCase() == "initiative") {
                 params[0] = "dexterity"
-                if(params.length > 1) {
+                if (params.length > 1) {
                     params[1] = "INITIATIVE"
                 } else {
                     params.push("INITIATIVE")
                 }
-            }
+            } else if (params[0].toLowerCase() == "attack") {
+                return require('./attack.js').attack(msg, params.slice(1), say)
+            } else if (params[0].toLowerCase() == "damage") {
+                return require('./attack.js').damage(msg, params.slice(1), say)
+            } els
             let commands = require('./globals.js').commands
             if (commands['check'] &&
                 commands['check'][params[0]]) {
-                    return commands['check'][params[0]].cmd(msg, params, say)
+                return commands['check'][params[0]].cmd(msg, params, say)
             } else {
                 let reason = ''
                 if (params.length > 1) {
