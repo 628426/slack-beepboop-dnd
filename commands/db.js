@@ -31,6 +31,7 @@ module.exports = function (store) {
                     applyToObject(playerToReturn, playerWithCommands.commands[c].operation, playerWithCommands.commands[c].args)
                 }
             }
+            
             playerToReturn.version = playerWithCommands.commands.length
             return cb(null, playerToReturn)
 
