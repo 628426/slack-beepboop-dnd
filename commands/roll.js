@@ -20,7 +20,7 @@ module.exports = function (msg, params, say) {
                     params[0] = matchingRolls[0]
                 } else if (matchingRolls && matchingRolls.length > 1) {
                     let choices = `:sob: Sorry, I couldn't tell what you meant.  Did you mean one of?\r\n`
-                    for (var m in matchingRolls) {
+                    for (var m of matchingRolls) {
                         choices += `/roll ${m}\r\n`
                     }
                     return say(choices)
