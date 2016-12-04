@@ -7,15 +7,27 @@ module.exports = function (msg, params, say) {
         1,
         say,
         function () {
-            // check if params[0] references another function...
-            if (params[0].toLowerCase() == "initiative") {
-                params[0] = "dexterity"
-                if (params.length > 1) {
-                    params[1] = "INITIATIVE"
-                } else {
-                    params.push("INITIATIVE")
+
+            // see what can be rolled
+            if (!/\d/.test(params[0])) {
+                // see if there are any matching...
+                let matchingRolls = require('./skills.js').map((value) => {
+                    return value.name
+                }).concat(['attack', 'damage']).sort().filter((value) => {
+                    return value.toLowerCase().startsWith(param[0])
+                })
+                if (matchingRolls && matchingRolls.length == 1) {
+                    params[0] = matchingRolls[0]
+                } else if (matchingRolls && matchingRolls.length > 1) {
+                    let choices = `:sob: Sorry, I couldn't tell what you meant.  Did you mean one of?\r\n`
+                    for (var m in matchingRolls) {
+                        choices += `/roll ${m}\r\n`
+                    }
+                    return say(choices)
                 }
-            } else if (params[0].toLowerCase() == "attack") {
+            }
+
+            if (params[0].toLowerCase() == "attack") {
                 console.log('calling attack.attack')
                 return require('./attack.js').attack(msg, params.slice(1), say)
             } else if (params[0].toLowerCase() == "damage") {
@@ -31,7 +43,6 @@ module.exports = function (msg, params, say) {
                 if (params.length > 1) {
                     reason = ' (_' + params.slice(1).join(' ') + '_)'
                 }
-
                 var roll = new r().roll(params[0])
 
                 return say(`@${msg.body["user_name"]} rolled _${params[0]}_${reason} and got ${roll.result} (dice rolled were ${JSON.stringify(roll.rolled)})`)
