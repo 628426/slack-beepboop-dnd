@@ -14,7 +14,7 @@ module.exports = function (msg, params, say) {
                 let matchingRolls = require('./skills.js').map((value) => {
                     return value.name
                 }).concat(['attack', 'damage']).sort().filter((value) => {
-                    return value.toLowerCase().startsWith(param[0])
+                    return value.toLowerCase().startsWith(params[0])
                 })
                 if (matchingRolls && matchingRolls.length == 1) {
                     params[0] = matchingRolls[0]
